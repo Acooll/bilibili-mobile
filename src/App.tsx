@@ -11,6 +11,8 @@ import './App.styl';
 
 import Index from './pages/Index'
 import Video from './pages/Video'
+import Search from './pages/Search'
+import My from './pages/My'
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Switch>
             <Route path='/index' component={Index} />
             <Route path='/video' component={Video} />
+            <Route path='/search' component={Search} />
+            <Route path='/my' component={My} />
             <Redirect to="/index" />
           </Switch>
         </Suspense>

@@ -103,7 +103,7 @@ module.exports = function (proxy, allowedHost) {
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy: {
     	'/api': {
-            target: 'http://localhost:3011', // 后台服务地址以及端口号
+            target: 'https://api.bilibili.com', // 后台服务地址以及端口号
             ws: true,
             changeOrigin: true, //是否跨域
             pathRewrite: { '^/api': '' }

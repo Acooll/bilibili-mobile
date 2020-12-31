@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Logo from "../../components/Logo";
 import Avatar from "../../components/Avatar";
 
@@ -7,21 +7,18 @@ import IconSearch from '../../assets/search.png'
 
 
 
-
-
-const Header: React.FC = () => {
-
+const Header = () => {
 
   return (
     <div className='header_container'>
-      <div className='header_bar'>
+      <div className='header_bar' >
         <a href="/index" className='logo'>
           <Logo />
         </a>
-        <a href="" className='search_icon'>
+        <a href="/search" className='search_icon'>
           <img className="icon-search" src={IconSearch} />
         </a>
-        <a href="" className='avatar'>
+        <a href="/my" className='avatar'>
           <Avatar />
         </a>
       </div>

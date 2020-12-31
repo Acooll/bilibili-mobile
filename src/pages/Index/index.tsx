@@ -19,10 +19,6 @@ const Index = (props) => {
     }
   }, [])
 
-
-
-
-
   return (
     <div className='container'>
       <Header />
