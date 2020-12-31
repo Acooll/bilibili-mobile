@@ -1,0 +1,69 @@
+.bar_container
+  width: 100vw
+  background: #fff
+  position: fixed
+  top: 10vw
+  z-index 999
+  .menu_bar
+    // width: 100%;
+    padding: 0 0 0 2vw
+    display flex
+    overflow hidden
+    .menu
+      margin-top: 4vw
+      height: 8vw
+      display:flex
+      overflow-x scroll
+      overflow-y hidden
+      div
+        width: 15vw
+        height: 6.8vw
+        color: #505050
+        font-size: 14px
+        margin: 0 5vw
+        white-space nowrap
+      .activeMenu
+        border-bottom:2px solid #fb7299
+        color: #fb7299
+    .arrow
+      width 14vw
+      height 10vw   
+      background #fff
+      position absolute
+      right 0
+      img
+        width 5vw
+        height 3.6vw
+        position absolute
+        margin 5vw 0 0 30%
+  .wrapper
+    width 100vw
+    height 160px
+    background #fff
+    position fixed
+    top -160px
+    transition all .3s
+   .icon_up
+      width 4vw
+      height 3.3vw 
+      position absolute
+      bottom 5px
+      left 49%
+  .showWrapper  
+    transform translateY(130%)
+    transition all .3s
+    .wrapper_box
+      width 100%
+      height 140px
+      display flex
+      flex-wrap wrap
+      div
+        width 8vw
+        height 7vw
+        font-size 15px
+        color #505050
+        margin 18px 0 0 28px
+      .activeMenu
+        border-bottom:2px solid #fb7299
+        color: #fb7299
+

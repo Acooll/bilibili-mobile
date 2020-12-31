@@ -1,12 +1,35 @@
-import React from 'react'
-import './style.styl'
+import React, { useEffect, useState } from 'react'
+import Logo from "../../components/Logo";
+import Avatar from "../../components/Avatar";
 
-const Header:React.FC = () => {
+import './style.styl'
+import IconSearch from '../../assets/search.png'
+
+
+
+
+
+const Header: React.FC = () => {
+
+
   return (
     <div className='header_container'>
-      <div>11</div>
+      <div className='header_bar'>
+        <a href="/index" className='logo'>
+          <Logo />
+        </a>
+        <a href="" className='search_icon'>
+          <img className="icon-search" src={IconSearch} />
+        </a>
+        <a href="" className='avatar'>
+          <Avatar />
+        </a>
+      </div>
+  
     </div>
   )
 }
+
+
 
 export default Header
