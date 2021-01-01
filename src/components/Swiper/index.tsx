@@ -26,7 +26,7 @@ const Slider = (props) => {
   return (
     <div className="slider-container">
       <div className="swiper-wrapper">
-        {
+        {bannerList.length?
           bannerList.map((slider, i) => {
             return (
               <div className="swiper-slide" key={slider.id}>
@@ -35,7 +35,7 @@ const Slider = (props) => {
                 </div>
               </div>
             )
-          })
+          }):null
         }
         
       </div>

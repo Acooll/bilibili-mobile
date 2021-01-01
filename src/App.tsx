@@ -13,6 +13,9 @@ import Index from './pages/Index'
 import Video from './pages/Video'
 import Search from './pages/Search'
 import My from './pages/My'
+import Live from './pages/Live'
+import LiveRoom from './pages/LiveRoom'
+import LivesArea from './pages/LivesArea'
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
             <Route path='/video' component={Video} />
             <Route path='/search' component={Search} />
             <Route path='/my' component={My} />
+            <Route path='/lives' component={Live} />
+            <Route path='/live_room' component={LiveRoom} />
+            <Route path='/lives_area' component={LivesArea} />
             <Redirect to="/index" />
           </Switch>
         </Suspense>

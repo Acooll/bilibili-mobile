@@ -1,4 +1,13 @@
-import { SET_BANNERS, SET_RECOMMEND,SET_PLAYER_URL,SET_PLAYER_DETAIL,SET_DETAIL_RECOMMEND,SET_SEARCH_LIST } from './actions'
+import { SET_BANNERS, 
+  SET_RECOMMEND,
+  SET_PLAYER_URL,
+  SET_PLAYER_DETAIL,
+  SET_DETAIL_RECOMMEND,
+  SET_SEARCH_LIST,
+  SET_LIVE_LIST ,
+  SET_STRAMING,
+  SET_STRAM_INFO
+} from './actions'
 import { AnyAction, combineReducers } from "redux"
 
 
@@ -9,7 +18,10 @@ const initialState = {
   playerUrl:'',
   playerDetail:'',
   detailRecommend:[],
-  searchList:[]
+  searchList:[],
+  liveList:[],
+  streaming:[],
+  streamInfo:''
 }
 
 
@@ -70,13 +82,45 @@ function searchList(searchList = initialState.searchList, action: AnyAction){
         return searchList;
   }
 }
+
+function liveList(liveList = initialState.liveList, action: AnyAction){
+  switch(action.type){
+    case SET_LIVE_LIST:
+      return action.liveList
+      default:
+        return liveList;
+  }
+}
+
+
+function streaming(streaming = initialState.streaming, action: AnyAction){
+  switch(action.type){
+    case SET_STRAMING:
+      return action.streaming
+      default:
+        return streaming;
+  }
+}
+
+function streamInfo(streamInfo= initialState.streamInfo, action: AnyAction){
+  switch(action.type){
+    case SET_STRAM_INFO:
+      return action.streamInfo
+      default:
+        return streamInfo;
+  }
+}
+
 const reducer = combineReducers({
   banners,
   recommendList,
   playerUrl,
   playerDetail,
   detailRecommend,
-  searchList
+  searchList,
+  liveList,
+  streaming,
+  streamInfo
 })
 
 
