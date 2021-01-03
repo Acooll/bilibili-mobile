@@ -1,36 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import VideoPlayer from '../../components/VideoPlayer'
-
+import './style.styl'
 import { connect } from "react-redux"
 import * as actionTypes from '../../store/actions'
 import PlayerDetail from '../../components/PlayerDetail'
 
 const Video = (props) => {
-  const { location, playerUrl, getPlayUrlDispatch, getPlayDetailDispatch,getDetailRecommendDispatch, playerDetail ,detailRecommend} = props
+  const { location, playerUrl, getPlayUrlDispatch, getPlayDetailDispatch, getDetailRecommendDispatch, playerDetail, detailRecommend,danmu,getDanmuDispatch } = props
   const aid = location.search.match(/\d+/)
   const bvid = location.search.match(/([A-Z])\w+/g)
+  const [showPic, setShowPic] = useState(true)
 
   useEffect(() => {
     getPlayDetailDispatch([aid, bvid])
     getDetailRecommendDispatch(aid)
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     if (playerDetail !== '') {
-      getPlayUrlDispatch([playerDetail.aid, playerDetail.cid])     
+      getPlayUrlDispatch([playerDetail.aid, playerDetail.cid])
+      getDanmuDispatch(playerDetail.cid)
     }
+    // eslint-disable-next-line
   }, [playerDetail])
 
+  const closePic = (props) => {
+    setShowPic(!props)
+  }
 
   return (
-    <div>
-      <Header  />
-      <div>
-        <VideoPlayer playerUrl={playerUrl} />
+    <div className='videoHome'>
+      <Header />
+      <div className='videoContent'>
+        {
+          showPic ? <img className='videoPic' src={playerDetail.pic} alt="" /> : null
+        }
+        <VideoPlayer playerUrl={playerUrl} closePic={closePic} danmu={danmu} />
       </div>
-      <div>
-        <PlayerDetail playerDetail={playerDetail} detailRecommend={detailRecommend} />
+      <div className='detailVideoList'>
+        <PlayerDetail playerDetail={playerDetail} detailRecommend={detailRecommend} history={props.history}  />
       </div>
     </div>
   )
@@ -50,6 +60,9 @@ export default connect(
       },
       getDetailRecommendDispatch(props) {
         dispatch(actionTypes.fetchDetailRecommend(props))
+      },
+      getDanmuDispatch(props) {
+        dispatch(actionTypes.fetchDanmu(props))
       },
     };
   }

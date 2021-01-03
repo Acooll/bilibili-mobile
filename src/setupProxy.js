@@ -10,6 +10,17 @@ module.exports = function(app) {
       pathRewrite:{
         '^/live':''
       }
-    })
+    }),
   );
+  app.use(
+    '/local',
+    createProxyMiddleware({
+      target: 'http://localhost:3011',
+      changeOrigin: true,
+      ws:true,
+      pathRewrite:{
+        '^/local':''
+      }
+    }),
+  )
 };

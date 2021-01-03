@@ -13,9 +13,11 @@ import Index from './pages/Index'
 import Video from './pages/Video'
 import Search from './pages/Search'
 import My from './pages/My'
+import Space from './pages/Space'
 import Live from './pages/Live'
 import LiveRoom from './pages/LiveRoom'
 import LivesArea from './pages/LivesArea'
+import Channel from './pages/Channel'
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
             <Route path='/lives' component={Live} />
             <Route path='/live_room' component={LiveRoom} />
             <Route path='/lives_area' component={LivesArea} />
+            <Route path='/space' component={Space} />
+            <Route path='/channel' component={Channel} />
             <Redirect to="/index" />
           </Switch>
         </Suspense>

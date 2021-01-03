@@ -5,7 +5,7 @@ import IconRight from '../../assets/right.png'
 const LiveTypes = (props) => {
 
   const { liveList,history } = props
-  console.log(liveList,props)
+
   return (
     <>
       {

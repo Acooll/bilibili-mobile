@@ -1,5 +1,18 @@
 import { AnyAction } from "redux";
-import { getBanner, getRecommend, getPlayerUrl,getPlayerDetail,getDetailRecommend,getSearchList,getLiveList,getStreaming,getStreamInfo} from '../api'
+import {
+  getBanner,
+  getRecommend,
+  getPlayerUrl,
+  getPlayerDetail,
+  getDetailRecommend,
+  getSearchList,
+  getLiveList,
+  getStreaming,
+  getStreamInfo,
+  getUpInfo,
+  getRegion,
+  getDanmu
+} from '../api'
 
 export const SET_BANNERS = 'SET_BANNERS'
 export const SET_RECOMMEND = 'SET_RECOMMEND'
@@ -10,6 +23,9 @@ export const SET_SEARCH_LIST = 'SET_SEARCH_LIST'
 export const SET_LIVE_LIST = 'SET_LIVE_LIST'
 export const SET_STRAMING = 'SET_STREAMING'
 export const SET_STRAM_INFO = 'SET_STREAM_INFO'
+export const SET_UP_INFO = 'SET_UP_INFO'
+export const SET_REGION = 'SET_REGION'
+export const SET_DANMU = 'SET_DANMU'
 
 export const setBanners = (banners: Array<any>): AnyAction => ({
   type: SET_BANNERS,
@@ -57,6 +73,22 @@ export const setStreaming = (streaming: Array<any>): AnyAction => ({
 export const setStreamInfo = (streamInfo: Array<any>): AnyAction => ({
   type: SET_STRAM_INFO,
   streamInfo
+})
+
+
+export const setUpInfo = (upInfo: Array<any>): AnyAction => ({
+  type: SET_UP_INFO,
+  upInfo
+})
+
+export const setRegion = (region: Array<any>): AnyAction => ({
+  type: SET_REGION,
+  region
+})
+
+export const setDanmu = (danmu: Array<any>): AnyAction => ({
+  type: SET_DANMU,
+  danmu
 })
 
 
@@ -153,7 +185,7 @@ export const fetchStreaming = (props) => {
   return (dispatch) => {
     getStreaming(props).then(res => {
 
-    dispatch(setStreaming(res.data.durl))
+      dispatch(setStreaming(res.data.durl))
 
     }).catch(err => {
       console.log('直播流数据获取失败！', err)
@@ -165,10 +197,46 @@ export const fetchStreamInfo = (props) => {
   return (dispatch) => {
     getStreamInfo(props).then(res => {
 
-    dispatch(setStreamInfo(res.data))
+      dispatch(setStreamInfo(res.data))
 
     }).catch(err => {
       console.log('直播数据获取失败！', err)
     })
   }
 }
+
+
+
+export const fetchUpInfo = (props) => {
+  return (dispatch) => {
+    getUpInfo(props).then(res => {
+
+      dispatch(setUpInfo(res.data))
+
+    }).catch(err => {
+      console.log('up数据获取失败！', err)
+    })
+  }
+}
+
+export const fetchRegion = (props) => {
+  return (dispatch) => {
+    getRegion(props).then(res => {
+
+      dispatch(setRegion(res.data))
+    }).catch(err => {
+      console.log('region数据获取失败！', err)
+    })
+  }
+}
+
+export const fetchDanmu = (props) => {
+  return (dispatch) => {
+    getDanmu(props).then(res => {
+      dispatch(setDanmu(res.data))
+    }).catch(err => {
+      console.log('danmu数据获取失败！', err)
+    })
+  }
+}
+

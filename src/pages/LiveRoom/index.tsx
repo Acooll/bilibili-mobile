@@ -22,8 +22,8 @@ const LiveRoom = (props) => {
    const relation_info =  Object.assign({},anchor_info).relation_info
    const room_info = Object.assign({},streamInfo.room_info) 
    const attention =  Object.assign({},relation_info).attention
-   console.log(attention)
-  console.log(props)
+
+
   return (
     <div>
       <div className='roomHeader'>
@@ -36,7 +36,7 @@ const LiveRoom = (props) => {
           <span>视频聊天</span>
         </div>
       </div>
-      <div>
+      <div className='livePlayer'>
         <VideoPlayer isLive={true} playerUrl={streaming} />
       </div>
       <div className='liveInfo'>

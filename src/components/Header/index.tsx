@@ -15,8 +15,8 @@ const Header = () => {
         <a href="/index" className='logo'>
           <Logo />
         </a>
-        <a href="/search" className='search_icon'>
-          <img className="icon-search" src={IconSearch} />
+        <a href="/search"  className='search_icon'>
+          <img className="icon-search" src={IconSearch} alt='' />
         </a>
         <a href="/my" className='avatar'>
           <Avatar />

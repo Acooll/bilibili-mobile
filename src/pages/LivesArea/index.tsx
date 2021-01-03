@@ -13,8 +13,11 @@ const LivesArea = (props) => {
     axios.get('/live/room/v1/AppIndex/getAreas?device=phone&platform=ios&scale=3&build=3939').then(res => {
       setAreas(res.data.data)
     })
+    axios.get('/local/av/barrage/275727637').then(res=>{
+      console.log(res)
+    })
   },[])
-  console.log(areas)
+
 
   return (
     <div>

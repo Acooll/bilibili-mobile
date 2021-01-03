@@ -9,7 +9,6 @@ import MenuBar from '../../components/MenuBar'
 
 const Index = (props) => {
   const { getBannerListDispatch, banners, recommendList, getRecommendListDispatch } = props
-
   useEffect(() => {
     if (!banners.length) {
       getBannerListDispatch()
@@ -22,12 +21,12 @@ const Index = (props) => {
   return (
     <div className='container'>
       <Header />
-      <MenuBar />
+      <MenuBar  history={props.history} chooseId={0} />
       <div className='swiper_container'>
         <Swiper bannerList={banners} />
       </div>
       <div className='recommend'>
-        <Recommend recommendList={recommendList} />
+        <Recommend recommendList={recommendList}   />
       </div>
 
     </div>

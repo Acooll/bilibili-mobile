@@ -6,7 +6,10 @@ import { SET_BANNERS,
   SET_SEARCH_LIST,
   SET_LIVE_LIST ,
   SET_STRAMING,
-  SET_STRAM_INFO
+  SET_STRAM_INFO,
+  SET_UP_INFO,
+  SET_REGION,
+  SET_DANMU
 } from './actions'
 import { AnyAction, combineReducers } from "redux"
 
@@ -21,7 +24,11 @@ const initialState = {
   searchList:[],
   liveList:[],
   streaming:[],
-  streamInfo:''
+  streamInfo:'',
+  upInfo:'',
+  region:[],
+  danmu:[]
+  
 }
 
 
@@ -111,6 +118,36 @@ function streamInfo(streamInfo= initialState.streamInfo, action: AnyAction){
   }
 }
 
+
+function upInfo(upInfo= initialState.upInfo, action: AnyAction){
+  switch(action.type){
+    case SET_UP_INFO:
+      return action.upInfo
+      default:
+        return upInfo;
+  }
+}
+
+function region(region= initialState.region, action: AnyAction){
+  switch(action.type){
+    case SET_REGION:
+      return action.region
+      default:
+        return region;
+  }
+}
+
+
+function danmu(danmu= initialState.danmu, action: AnyAction){
+  switch(action.type){
+    case SET_DANMU:
+      return action.danmu
+      default:
+        return danmu
+  }
+}
+
+
 const reducer = combineReducers({
   banners,
   recommendList,
@@ -120,7 +157,10 @@ const reducer = combineReducers({
   searchList,
   liveList,
   streaming,
-  streamInfo
+  streamInfo,
+  upInfo,
+  region,
+  danmu
 })
 
 

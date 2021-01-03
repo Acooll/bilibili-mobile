@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 
 import './style.styl'
@@ -9,37 +9,68 @@ import classNames from 'classnames'
 
 
 const menuList = [
-  {
-    id: 1, title: '首页'
+  { "tid": 0, "typename": "首页" },
+  { "tid": 1, "typename": "动画" },
+  { "tid": 13, "typename": "番剧" },
+  { "tid": 168, "typename": "国创" },
+  { "tid": 3, "typename": "音乐" },
+  { "tid": 129, "typename": "舞蹈" },
+  { "tid": 4, "typename": "游戏" }, {
+    "tid": 36, "typename": "科技"
   },
-  { id: 2, title: '动画' },
-  { id: 3, title: '国创' }, {
-    id: 4, title: '音乐'
-  }, { id: 5, title: '舞蹈' }, {
-    id: 6, title: '游戏'
-  }, {
-    id: 7, title: '游戏'
-  }
+  { "tid": 188, "typename": "数码" },
+  { "tid": 160, "typename": "生活" },
+  { "tid": 119, "typename": "鬼畜" },
+  { "tid": 155, "typename": "时尚" },
+  { "tid": 5, "typename": "娱乐" },
+  { "tid": 181, "typename": "影视" },
+  { "tid": 177, "typename": "纪录片" },
+  { "tid": 23, "typename": "电影" },
+  // { "tid": 11, "typename": "电视剧" },
+  { "tid": 999, "typename": "直播" }
 ]
 
 
 
+const MenuBar = (props) => {
+  const { typeList, history, chooseId, fetchData } = props
+  const [chooseBar, setChooseBar] = useState(0)
 
-const MenuBar: React.FC = (props) => {
+  const barRef = useRef(null)
 
-  let currentIndex = 0
-
+  console.log(typeList)
   const [showBox, setShowBox] = useState(false)
-  
+
+
+  useEffect(() => {
+    setChooseBar(chooseId)
+  }, [chooseId])
+
+  const selectRegion = (e) => {
+    if (e === 0) {
+      history.push('/index')
+    } else {
+      if (e === 999) {
+        history.push('/lives')
+      } else {
+        if (fetchData !== undefined) {
+          fetchData(true)
+        }
+        history.push(`/channel?tid=${e}`)
+      }
+    }
+  }
 
   return (
     <div className='bar_container'>
-      
+
       <div className='menu_bar'>
-        <div className='menu'>
-          {menuList.map((item, i) => (
-            <div key={item.id} className={classNames(currentIndex === i ? 'activeMenu' : '')}>
-              {item.title}
+        <div className='menu' ref={barRef}>
+          {menuList.map(item => (
+            <div key={item.tid}
+              className={classNames(chooseBar === item.tid ? 'activeMenu' : '')}
+              onClick={selectRegion.bind(this, item.tid)}>
+              {item.typename}
             </div>
           ))}
         </div>
@@ -49,9 +80,12 @@ const MenuBar: React.FC = (props) => {
       </div>
       <div className={classNames('wrapper', showBox ? 'showWrapper' : '')}>
         <div className='wrapper_box'>
-          {menuList.map((item, i) => (
-            <div key={item.id} className={classNames(currentIndex === i ? 'activeMenu' : '')}>
-              {item.title}
+          {menuList.map(item => (
+            <div key={item.tid}
+              className={classNames(chooseBar === item.tid ? 'activeMenu' : '')}
+              onClick={selectRegion.bind(this, item.tid)}
+            >
+              {item.typename}
             </div>
           ))}
         </div>

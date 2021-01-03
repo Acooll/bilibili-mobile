@@ -1,4 +1,4 @@
-import { request, http } from './axios'
+import { request, http ,fetch} from './axios'
 
 export const getBanner = () => {
   return request.get('/x/web-show/res/loc?pf=7&id=1695')
@@ -36,3 +36,16 @@ export const getStreaming = (props) =>{
 export const getStreamInfo = (props) =>{
   return http.get(`/xlive/web-room/v1/index/getH5InfoByRoom?room_id=${props}`)
 }
+export const getUpInfo = (props) => {
+  return request.get(`/x/space/acc/info?mid=${props}`)
+}
+
+export const getRegion = (props) => {
+  return request.get(`/x/web-interface/ranking/region?rid=${props}&day=7`)
+}
+
+export const getDanmu = (props) => {
+  return fetch.get(`/av/barrage/${props}`)
+}
+
+

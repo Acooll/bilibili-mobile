@@ -6,18 +6,18 @@ import IconStar from '../../assets/star.png'
 import IconDownload from '../../assets/download.png'
 import IconBan from '../../assets/ban.png'
 import classnames from 'classnames'
-
 import IconArrowDown from '../../assets/arrow_down.png'
 import IconArrowUp from '../../assets/arrow_up.png'
+import { timestampToTime, tenThousand } from '../../util'
 
 const PlayerDetail = (props) => {
-  const { playerDetail, detailRecommend } = props
+  const { playerDetail, detailRecommend, history } = props
   const author = Object.assign({}, playerDetail.owner)
+  const stat= Object.assign({}, playerDetail.stat)
 
   const [spread, setSpread] = useState(false)
   const [selectComments, setSelectComments] = useState(false)
 
-  console.log(detailRecommend)
   const toggleSpread = () => {
     if (spread) {
       setSpread(false)
@@ -54,9 +54,9 @@ const PlayerDetail = (props) => {
               <div className='payAttention'>+ 关注</div>
             </div>
             <div className='viewInfo'>
-              <span>188.2万观看</span>
-              <span>3.8万弹幕</span>
-              <span>12.31</span>
+              <span>{tenThousand(playerDetail.stat.view)}观看</span>
+              <span>{tenThousand(playerDetail.stat.danmaku)}弹幕</span>
+              <span>{timestampToTime(playerDetail.pubdate).substr(0, 10)}</span>
             </div>
             <div className='banInfo'>
               <img src={IconBan} alt="" />
@@ -66,10 +66,10 @@ const PlayerDetail = (props) => {
             <div className='left_info'>
               <div className='tool'>
                 <img src={IconZan} alt="" />
-                <span>49.7万</span>
+                <span>{tenThousand(stat.like)}</span>
               </div>
               <div className='tool'> <img src={IconStar} alt="" />
-                <span>23.5万</span>
+                <span>{tenThousand(stat.favorite)}</span>
               </div>
               <div className='tool'> <img src={IconDownload} alt="" />
                 <span>缓存</span>
@@ -84,10 +84,10 @@ const PlayerDetail = (props) => {
               </div>
               <div className='tool'>
                 <img src={IconZan} alt="" />
-                <span>49.7万</span>
+                <span>{tenThousand(stat.like)}</span>
               </div>
               <div className='tool'> <img src={IconStar} alt="" />
-                <span>23.5万</span>
+                <span>{tenThousand(stat.favorite)}</span>
               </div>
               <div className='tool'> <img src={IconDownload} alt="" />
                 <span>缓存</span></div>
@@ -96,14 +96,14 @@ const PlayerDetail = (props) => {
       </div>
       <div className='recommendList'>
         <div className='listBar'>
-          <div  onClick={() => setSelectComments(false)}> <span className={selectComments?'':'selected'}>相关推荐</span></div>
-          <div  onClick={() => setSelectComments(true)}><span className={selectComments?'selected':''}>评论</span></div>
+          <div onClick={() => setSelectComments(false)}> <span className={selectComments ? '' : 'selected'}>相关推荐</span></div>
+          <div onClick={() => setSelectComments(true)}><span className={selectComments ? 'selected' : ''}>评论</span></div>
         </div>
         <div className={classnames('listContainer', selectComments ? 'commentsSelected' : '')} >
           {
             detailRecommend.map((item) => {
               return (
-                <div key={item.aid} className='listItem'>
+                <div key={item.aid} className='listItem' onClick={() => history.push(`/space?mid=${item.owner.mid}`)}>
                   <div>
                     <img src={item.pic} alt="" />
                   </div>
