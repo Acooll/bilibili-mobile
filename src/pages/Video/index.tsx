@@ -5,9 +5,15 @@ import './style.styl'
 import { connect } from "react-redux"
 import * as actionTypes from '../../store/actions'
 import PlayerDetail from '../../components/PlayerDetail'
+import Comments from '../../components/Comments'
 
 const Video = (props) => {
-  const { location, playerUrl, getPlayUrlDispatch, getPlayDetailDispatch, getDetailRecommendDispatch, playerDetail, detailRecommend,danmu,getDanmuDispatch } = props
+  const { location, playerUrl,
+    getPlayUrlDispatch, getPlayDetailDispatch,
+    getDetailRecommendDispatch, playerDetail,
+    detailRecommend, danmu, getDanmuDispatch,
+    getCommentsDispatch,comments
+  } = props
   const aid = location.search.match(/\d+/)
   const bvid = location.search.match(/([A-Z])\w+/g)
   const [showPic, setShowPic] = useState(true)
@@ -15,6 +21,7 @@ const Video = (props) => {
   useEffect(() => {
     getPlayDetailDispatch([aid, bvid])
     getDetailRecommendDispatch(aid)
+    getCommentsDispatch(aid)
     // eslint-disable-next-line
   }, [])
 
@@ -40,8 +47,9 @@ const Video = (props) => {
         <VideoPlayer playerUrl={playerUrl} closePic={closePic} danmu={danmu} />
       </div>
       <div className='detailVideoList'>
-        <PlayerDetail playerDetail={playerDetail} detailRecommend={detailRecommend} history={props.history}  />
+        <PlayerDetail comments={comments} playerDetail={playerDetail} detailRecommend={detailRecommend} history={props.history} />
       </div>
+ 
     </div>
   )
 }
@@ -63,6 +71,9 @@ export default connect(
       },
       getDanmuDispatch(props) {
         dispatch(actionTypes.fetchDanmu(props))
+      },
+      getCommentsDispatch(props) {
+        dispatch(actionTypes.fetchComments(props))
       },
     };
   }

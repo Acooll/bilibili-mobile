@@ -16,6 +16,11 @@ export const getPlayerDetail = (props) => {
   return request.get(`/x/web-interface/view?aid=${props[0]}&bvid=${props[1]}`)
 }
 
+export const getComments = (props) => {
+  return request.get(`/x/v2/reply/main?oid=${props}&type=1`)
+}
+
+
 
 export const getDetailRecommend = (props) => {
   return request.get(`x/web-interface/archive/related?aid=${props}&context=`)

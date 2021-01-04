@@ -9,7 +9,8 @@ import { SET_BANNERS,
   SET_STRAM_INFO,
   SET_UP_INFO,
   SET_REGION,
-  SET_DANMU
+  SET_DANMU,
+  SET_COMMENTS
 } from './actions'
 import { AnyAction, combineReducers } from "redux"
 
@@ -27,8 +28,8 @@ const initialState = {
   streamInfo:'',
   upInfo:'',
   region:[],
-  danmu:[]
-  
+  danmu:[],
+  comments:[]
 }
 
 
@@ -71,6 +72,15 @@ function playerDetail(playerDetail = initialState.playerDetail, action: AnyActio
   }
 }
 
+
+function comments(comments = initialState.comments, action: AnyAction){
+  switch(action.type){
+    case SET_COMMENTS:
+      return action.comments;
+      default:
+        return comments;
+  }
+}
 
 function detailRecommend(detailRecommend = initialState.detailRecommend, action: AnyAction){
   switch(action.type){
@@ -128,7 +138,7 @@ function upInfo(upInfo= initialState.upInfo, action: AnyAction){
   }
 }
 
-function region(region= initialState.region, action: AnyAction){
+function region(region= initialState.region, action){
   switch(action.type){
     case SET_REGION:
       return action.region
@@ -151,6 +161,7 @@ function danmu(danmu= initialState.danmu, action: AnyAction){
 const reducer = combineReducers({
   banners,
   recommendList,
+  comments,
   playerUrl,
   playerDetail,
   detailRecommend,

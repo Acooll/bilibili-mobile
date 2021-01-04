@@ -9,9 +9,11 @@ import classnames from 'classnames'
 import IconArrowDown from '../../assets/arrow_down.png'
 import IconArrowUp from '../../assets/arrow_up.png'
 import { timestampToTime, tenThousand } from '../../util'
+import Comments from '../../components/Comments'
+
 
 const PlayerDetail = (props) => {
-  const { playerDetail, detailRecommend, history } = props
+  const { playerDetail, detailRecommend, history,comments } = props
   const author = Object.assign({}, playerDetail.owner)
   const stat= Object.assign({}, playerDetail.stat)
 
@@ -113,10 +115,11 @@ const PlayerDetail = (props) => {
             })
           }
         </div>
+        {
+          selectComments? <Comments comments={comments} /> : null
+        } 
       </div>
-      <div className='commentsList'>
-
-      </div>
+     
     </div>
   )
 }

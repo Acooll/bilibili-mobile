@@ -11,7 +11,8 @@ import {
   getStreamInfo,
   getUpInfo,
   getRegion,
-  getDanmu
+  getDanmu,
+  getComments
 } from '../api'
 
 export const SET_BANNERS = 'SET_BANNERS'
@@ -26,6 +27,7 @@ export const SET_STRAM_INFO = 'SET_STREAM_INFO'
 export const SET_UP_INFO = 'SET_UP_INFO'
 export const SET_REGION = 'SET_REGION'
 export const SET_DANMU = 'SET_DANMU'
+export const SET_COMMENTS = 'SET_COMMENTS'
 
 export const setBanners = (banners: Array<any>): AnyAction => ({
   type: SET_BANNERS,
@@ -45,6 +47,11 @@ export const setPlayerUrl = (playerUrl: Array<any>): AnyAction => ({
 export const setPlayerDetail = (playerDetail: Array<any>): AnyAction => ({
   type: SET_PLAYER_DETAIL,
   playerDetail
+})
+
+export const setComments = (comments: Array<any>): AnyAction => ({
+  type: SET_COMMENTS,
+  comments
 })
 
 export const setDetailRecommend = (detailRecommend: Array<any>): AnyAction => ({
@@ -126,7 +133,7 @@ export const getRecommendList = () => {
 export const getPlayer = (props) => {
   return (dispatch) => {
     getPlayerUrl(props).then(res => {
-      dispatch(setPlayerUrl(res.data.durl[0].url))
+      dispatch(setPlayerUrl(res.data.durl[0]))
     }).catch(err => {
       console.log('播放源数据获取失败！', err)
     })
@@ -144,6 +151,17 @@ export const fetchPlayerDetail = (props) => {
   }
 }
 
+
+export const fetchComments = (props) => {
+
+  return (dispatch) => {
+    getComments(props).then(res => {
+      dispatch(setComments(res.data.replies))
+    }).catch(err => {
+      console.log('评论数据获取失败！', err)
+    })
+  }
+}
 
 export const fetchDetailRecommend = (props) => {
 

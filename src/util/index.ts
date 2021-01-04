@@ -30,3 +30,28 @@ export  function getColor(number) {
   const blue = number & 0xff;
   return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 }
+
+// 防抖函数
+export const debounce = (func, delay)=> {
+  let timer
+  return (...args) =>{
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      func.apply(this, args)
+    }, delay)
+  }
+}
+
+// 节流函数
+export const throttle = (func, delay)=> {
+  let now = Date.now()
+  return (...args)=> {
+    const current = Date.now()
+    if (current - now >= delay) {
+      func.apply(this, args)
+      now = current
+    }
+  }
+}

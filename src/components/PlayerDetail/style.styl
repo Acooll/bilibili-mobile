@@ -65,13 +65,16 @@
         color #212121
         margin .1vw  0 0 1.3vw
     .tool    
-      width 16vw
-      margin-left 6vw
+      width 17vw
+      margin-left 5vw
       display flex
       img
         width 5vw
         height 5vw
       span 
+        width 10vw
+        display inline-block
+        white-space nowrap
         font-size 3vw
         color #555  
         margin .5vw .6vw
@@ -139,6 +142,7 @@
           font-size 3vw
           color #555  
           margin .5vw .6vw
+          white-space nowrap
   .recommendList        
     .listBar
       width 100%
@@ -162,6 +166,7 @@
             border-bottom 2px solid #fb7299
             color #fb7299   
     .listContainer
+      position absolute
       width 100%
       display flex
       flex-wrap wrap   
@@ -183,7 +188,9 @@
     .commentsSelected
       margin-left -100% 
       transition all .3s   
-      
+  .commentsList
+    position absolute   
+    width 100% 
        
 
 

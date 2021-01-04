@@ -7,8 +7,8 @@ import IconPause from '../../assets/tv-pause.png'
 import IconBarrageOn from '../../assets/barrage-on.png'
 import IconBarrageOff from '../../assets/barrage-off.png'
 import IconFullScreen from '../../assets/fullscreen.png'
-
-
+import BarDot from '../../components/BarDot'
+import { debounce, throttle } from '../../util'
 
 
 const VideoPlayer = (props) => {
@@ -16,8 +16,12 @@ const VideoPlayer = (props) => {
   const { playerUrl, isLive, closePic, danmu } = props
   const videoRef = useRef(null)
   const danmuRef = useRef(null)
-  const [played, setPlayed] = useState(false)
-  const [showControls, setShowControls] = useState(true)
+  const controlRef = useRef(null)
+  const bottomControlRef = useRef(null)
+  const barRef = useRef(null)
+  const dotRef = useRef(null)
+  const [playing, setPlaying] = useState(false)
+  const [showControls, setShowControls] = useState(false)
   const [barrageOn, setBarrageOn] = useState(false)
   let barrageTimer
 
@@ -29,8 +33,7 @@ const VideoPlayer = (props) => {
 
 
   useEffect(() => {
-    console.log(333)
-    if (barrageOn) {
+    if (barrageOn && playing) {
       init()
       barrageTimer = setInterval(() => {
         if (domPool.length) {
@@ -44,7 +47,7 @@ const VideoPlayer = (props) => {
     }
     return () => clearInterval(barrageTimer)
 
-  }, [barrageOn])
+  }, [barrageOn, playing])
 
 
 
@@ -72,7 +75,7 @@ const VideoPlayer = (props) => {
       danmu.splice(index - i, 1)
     })
 
-    console.log(danmuPool, 'pool')
+    // console.log(danmuPool, 'pool')
     if (danmuPool.length) {
       for (let i = 0; i < danmuPool.length; i++) {
         let div = document.createElement('div')
@@ -92,9 +95,6 @@ const VideoPlayer = (props) => {
 
   }
 
-  async function clearBarrage() {
-    (danmuRef as any).current.removeChild(await document.querySelectorAll('.danmu'))
-  }
 
 
   const toggleSend = (e) => {
@@ -112,7 +112,9 @@ const VideoPlayer = (props) => {
     dom.style.transition = `all ${Math.round(1500 / x)}s linear`
   }
 
+
   useEffect(() => {
+    (bottomControlRef as any).current.style.display = 'none'
     if (isLive && playerUrl.length) {
       const videoDom = videoRef.current
       const videoSrc = playerUrl[3].url
@@ -125,78 +127,143 @@ const VideoPlayer = (props) => {
 
         (videoDom as any).addEventListener('canplay', () => {
           (videoDom as any).play()
-          setPlayed(true)
-          setTimeout(() => {
-            setShowControls(false)
-          }, 3000)
+          setPlaying(true)
+          // setTimeout(() => {
+          //   (controlRef as any).current.style.display = 'none'
+          // }, 3000)
         })
 
       }
+    } else if (playerUrl.length) {
+      initVideo()
     }
+
+    // return()=>  (videoRef as any).current.removeEventListener('timeupdate')
   }, [playerUrl])
 
+
+
+  const initVideo = () => {
+    const bar = barRef.current;
+    const dot = dotRef.current;
+    const video = videoRef.current;
+    (videoRef as any).current.addEventListener('timeupdate', () => {
+      const progress = ((videoRef as any).current.currentTime * 1000) / playerUrl.length * 100;
+      (bar as any).style.width = `${progress}%`;
+      (dot as any).style.marginLeft = `${progress / 2.22}vw`;
+    });
+
+    /**
+      * 进度条事件
+      */
+    // 总进度条宽度
+    let width = 0;
+    // 距离屏幕左边距离
+    let left = 0;
+    // 拖拽进度比例
+    let rate = 0;
+    (dotRef as any).current.addEventListener('touchstart', (e) => {
+      e.stopPropagation()
+      const parentDOM = (dot as any).parentElement;
+      width = parentDOM.offsetWidth;
+      left = parentDOM.getBoundingClientRect().left;
+      (video as any).pause()
+    });
+
+    (dotRef as any).current.addEventListener('touchmove', (e) => {
+      e.preventDefault()
+      const touch = e.touches[0];
+      // 计算拖拽进度比例
+      rate = (touch.clientX - left) / width;
+      if (rate > 1) {
+        rate = 1;
+      } else if (rate < 0) {
+        rate = 0;
+      }
+      // const currentTime = (video as any).duration * rate;
+      (dot as any).style.marginLeft = `${rate * 100}%`;
+      (bar as any).style.width = `${rate * 100}%`;
+    });
+    (dotRef as any).current.addEventListener("touchend", () => {
+      (video as any).currentTime = (video as any).duration * rate;
+      
+      (video as any).play()
+    });
+
+  }
+
   const changePlay = (e) => {
-    e.stopPropagation()
-    const videoDom = videoRef.current
-    if (played) {
-      setPlayed(false);
-      (videoDom as any).pause()
+    e.stopPropagation();
+    const videoDom = videoRef.current;
+
+    if (playing) {
+      setPlaying(false);
+      (videoDom as any).pause();
+
     } else {
       if (!isLive) {
+        (bottomControlRef as any).current.style.display = 'block'
         closePic(true)
       }
-      setPlayed(true);
+      setTimeout(() => {
+        (controlRef as any).current.style.display = 'none'
+      }, 5000)
+      setPlaying(true);
       (videoDom as any).play()
     }
   }
 
+  let timer
+
   const toggleShowControls = () => {
-    // console.log(barrageTimer)
-    // clearInterval(barrageTimer)
-    if (showControls) {
-      setShowControls(false)
+    clearTimeout(timer)
+    if ((controlRef as any).current.style.display === 'none') {
+      (controlRef as any).current.style.display = 'block'
+      // timer = setTimeout(() => {
+      //   if (playing) {
+      //     (controlRef as any).current.style.display = 'none'
+      //   }
+      // }, 5000)
     } else {
-      setShowControls(true)
-      setTimeout(() => {
-        setShowControls(false)
-      }, 3000)
+      (controlRef as any).current.style.display = 'none'
     }
   }
 
+  // useEffect(() => {
+
+  //   return () => clearTimeout(timer)
+  // }, [playing])
+
   return (
     <div className='video_wrapper' >
-      <div className='videoContainer' onClick={toggleShowControls}>
+      <div className='videoContainer' onClick={debounce(toggleShowControls, 200)}>
         <div className='danmuContainer' ref={danmuRef}></div>
         <video
-          src={isLive ? '' : playerUrl}
+          src={isLive ? '' : playerUrl.url}
           // controls={isLive ? false : true}
           ref={videoRef} height="100%" width="100%" preload="auto"
           x5-playsinline="true"
           webkit-playsinline="true"
         />
-        {
-          showControls ? <div className='control' >
-            <img className='control-play' src={played ? IconPause : IconPlay} onClick={changePlay} alt="" />
-            <div className='bottom-control'>
-              <img onClick={toggleSend} className='icon-barrage' src={barrageOn ? IconBarrageOn : IconBarrageOff} alt="" />
-              <img  className='icon-fullscreen' src={IconFullScreen} alt="" />
+        <div className='control' ref={controlRef}>
+          <img className='control-play' src={playing ? IconPause : IconPlay} onClick={changePlay} alt="" />
+          <div className='bottom-control' ref={bottomControlRef} >
+            <div className='barContainer'>
+              <div className='barDot' ref={dotRef}  >
+              </div>
+              <div className='allBar'>
+                <div className='activeBar' ref={barRef}></div>
+              </div>
             </div>
-          </div> : null
-        }
+            <img onClick={toggleSend} className='icon-barrage' src={barrageOn ? IconBarrageOn : IconBarrageOff} alt="" />
+            <img className='icon-fullscreen' src={IconFullScreen} alt="" />
+          </div>
+
+
+        </div>
 
       </div>
-      {/* <button onClick={send}>发送</button> */}
 
-      {/* <ReactPlayer
-            className='player'
-            width='100%' height='100%'
-            playing
-            controls
-            // autoPlay
-            url={playerUrl}
-          >           
-          </ReactPlayer>
-       */}
     </div>
 
   )
