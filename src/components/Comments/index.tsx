@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 import './style.styl'
-import {timestampToTime} from '../../util'
+import {timestampToTime,wordTransform} from '../../util'
 import IconZan from '../../assets/zan.png'
 
 
 const Comments = (props) => {
   const { comments } = props
+
   useEffect(() => {
-    console.log(comments)
+ 
   }, [comments])
+
   return (
     <div className='commentsContainer'>
 
@@ -24,8 +26,8 @@ const Comments = (props) => {
                 </div>
                 <div className='iconfonts'><img src={IconZan} alt=""/> <span>{item.like}</span> </div>
               </div>
-              <div className='creatorSays'>
-                {item.content.message.replace(/item.content.emote.text/g,'~')}
+              <div className='creatorSays' dangerouslySetInnerHTML={{ __html:wordTransform(item.content) }}>
+             
               </div>
             </div>
           )

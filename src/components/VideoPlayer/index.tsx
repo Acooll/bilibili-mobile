@@ -9,6 +9,7 @@ import IconBarrageOff from '../../assets/barrage-off.png'
 import IconFullScreen from '../../assets/fullscreen.png'
 import BarDot from '../../components/BarDot'
 import { debounce, throttle } from '../../util'
+import { setPlayerDetail } from '../../store/actions';
 
 
 const VideoPlayer = (props) => {
@@ -151,6 +152,7 @@ const VideoPlayer = (props) => {
       const progress = ((videoRef as any).current.currentTime * 1000) / playerUrl.length * 100;
       (bar as any).style.width = `${progress}%`;
       (dot as any).style.marginLeft = `${progress / 2.22}vw`;
+
     });
 
     /**
@@ -170,6 +172,13 @@ const VideoPlayer = (props) => {
       (video as any).pause()
     });
 
+
+    (video as any).addEventListener('ended', () => {
+      (video as any).currentTime = 0;
+      (video as any).pause();
+      setPlaying(false)
+    });
+
     (dotRef as any).current.addEventListener('touchmove', (e) => {
       e.preventDefault()
       const touch = e.touches[0];
@@ -186,7 +195,7 @@ const VideoPlayer = (props) => {
     });
     (dotRef as any).current.addEventListener("touchend", () => {
       (video as any).currentTime = (video as any).duration * rate;
-      
+
       (video as any).play()
     });
 

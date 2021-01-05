@@ -14,7 +14,7 @@ const Recommend = (props) => {
                 <img src={item.pic} alt="" />
 
               </div>
-              <div className='title'>{item.title}</div>
+              <p className='title'>{item.title}</p>
             </a>
           )
         })

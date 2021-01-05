@@ -13,17 +13,17 @@ export function timestampToTime(timestamp) {
 
 //数值取万
 
-export function tenThousand(props){
-  if(props>1000){
-    return (props/10000).toFixed(1) + '万'
-  }else{
+export function tenThousand(props) {
+  if (props > 1000) {
+    return (props / 10000).toFixed(1) + '万'
+  } else {
     return props
   }
 }
 
 //10进制颜色转rgba
 
-export  function getColor(number) {
+export function getColor(number) {
   const alpha = number >> 24 & 0xff;
   const red = number >> 16 & 0xff;
   const green = number >> 8 & 0xff;
@@ -32,9 +32,9 @@ export  function getColor(number) {
 }
 
 // 防抖函数
-export const debounce = (func, delay)=> {
+export const debounce = (func, delay) => {
   let timer
-  return (...args) =>{
+  return (...args) => {
     if (timer) {
       clearTimeout(timer)
     }
@@ -45,13 +45,32 @@ export const debounce = (func, delay)=> {
 }
 
 // 节流函数
-export const throttle = (func, delay)=> {
+export const throttle = (func, delay) => {
   let now = Date.now()
-  return (...args)=> {
+  return (...args) => {
     const current = Date.now()
     if (current - now >= delay) {
       func.apply(this, args)
       now = current
     }
   }
+}
+
+
+//颜文字
+
+export const wordTransform = (s) => {
+  const arr = []
+  const reg = /\[.+?\]/g
+  const msg = s.message
+  let key =reg.exec(msg)
+  if(key){
+    let url = s.emote[key[0]].url
+    return  msg.replace(reg,()=>{
+      return `<img  alt=""  src='${url}' />`
+    })
+  }else{
+    return s.message
+  }
+  
 }
