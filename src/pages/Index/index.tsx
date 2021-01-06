@@ -10,7 +10,7 @@ import MenuBar from '../../components/MenuBar'
 const Index = (props) => {
   const { getBannerListDispatch, banners, recommendList, getRecommendListDispatch } = props
   useEffect(() => {
-    if (!banners.length) {
+    if (!banners) {
       getBannerListDispatch()
     }
     if (!recommendList.length) {

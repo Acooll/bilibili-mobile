@@ -6,6 +6,8 @@ import './style.styl'
 import { connect } from "react-redux";
 
 import MenuBar from '../../components/MenuBar'
+import ChannelList from '../../components/ChannelList'
+import ChatList from '../../components/ChatList';
 
 const Channel = (props) => {
   const { location, region, getRegionDispatch,history } = props
@@ -25,19 +27,7 @@ const fetchData = (props) =>{
     <div className='container'>
       <Header  />
       <MenuBar history={history}  chooseId={Number(rid)} fetchData={fetchData} />
-      {/* <div className='channelContainer'>
-        <div className='channelBar'>
-        <div className='channelMenu'>
-          {region.map(item => (
-            <div key={item.aid}
-          >
-              {item.typename}
-            </div>
-          ))}
-        </div>
-        </div>
-        <div></div>
-      </div> */}
+      <ChannelList  region={region} history={history} />
     </div>
   )
 }

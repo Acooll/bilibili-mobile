@@ -7,9 +7,9 @@ import './style.styl'
 const ChatList = (props) => {
   const { chatData } = props
   const chatRef = useRef(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    console.log(chatData,111)
     // if (!chatData.length) return;
     const div = document.createElement('div');
     chatData.forEach(item => {
@@ -28,17 +28,23 @@ const ChatList = (props) => {
     })
 
     const timer = setTimeout(() => {
-      let needScorll = true;
-      // console.log((chatRef as any).current.scrollTop,(chatRef as any).current.clientHeight);
+   
+ 
+      const clientHeight = (containerRef as any).current.clientHeight;
+      const scrollHeight = (containerRef as any).current.scrollHeight;
+      if(scrollHeight>clientHeight){
+        (containerRef as any).current.scrollTop = scrollHeight - clientHeight
+      }
+     
       (chatRef as any).current.appendChild(div)
-
+      
     }, 100)
 
     return () => clearTimeout(timer)
   }, [chatData])
 
   return (
-    <div className='chatWrapper'>
+    <div className='chatWrapper' ref={containerRef}>
       <div className='chatContainer' ref={chatRef}>
         {/* <div className='chatItem'>
           <div>xxx:</div>

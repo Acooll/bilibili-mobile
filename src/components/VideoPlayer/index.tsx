@@ -40,10 +40,10 @@ const VideoPlayer = (props) => {
         if (domPool.length) {
           let dom = domPool.shift()
           danmuPool.shift()
-          console.log('im send', domPool, dom);
+          // console.log('im send', domPool, dom);
           sendDanmu(dom)
         } else {
-          console.log('again')
+          // console.log('again')
           start += 6
           init()
         }
@@ -56,7 +56,7 @@ const VideoPlayer = (props) => {
 
 
   const init = () => {
-    console.log(danmu, 889)
+    // console.log(danmu, 889)
     let dom = document.querySelectorAll('.danmu')
     if (dom.length) {
       for (let i = 0; i < dom.length; i++) {
@@ -79,10 +79,10 @@ const VideoPlayer = (props) => {
       })
     } else {
       danmuPool = danmu
-      console.log(danmuPool, 121121, danmu)
+      // console.log(danmuPool, 121121, danmu)
     }
     if (danmuPool.length ) {
-      console.log(56511111111111111111111)
+      // console.log(56511111111111111111111)
       for (let i = 0; i < danmuPool.length; i++) {
         let div = document.createElement('div')
         div.className = 'danmu'
