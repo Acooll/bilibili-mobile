@@ -4,15 +4,16 @@ import { connect } from "react-redux";
 import Logo from "../../components/Logo";
 import './style.styl'
 import VideoPlayer from '../../components/VideoPlayer'
-import {getDanmuConfig} from '../../api'
+import { getDanmuConfig } from '../../api'
 import ChatWebSocket, { Events } from "./ChatWS";
-import  ChatList  from '../../components/ChatList'
+import ChatList from '../../components/ChatList'
 
 const LiveRoom = (props) => {
   const { location, getStreamingDispatch, streaming, streamInfo, getStreamInfoDispatch } = props
   const roomid = location.search.match(/\d+/)
   const [activeBar, setActiveBar] = useState(0)
-  const [chatData,setChatData] = useState({})
+   const [chatData, setChatData] = useState({})
+  const [danmu, setDanmu] = useState([])
   useEffect(() => {
     getStreamInfoDispatch(roomid)
     getStreamingDispatch(roomid)
@@ -25,33 +26,38 @@ const LiveRoom = (props) => {
   const attention = Object.assign({}, relation_info).attention
 
 
- useEffect(()=>{
-   getDanmuConfig(roomid).then(res=>{
-    if (res.data) {
-      const url = `wss://${res.data.host_list[2].host}/sub`;
-      const chatWebSocket = new ChatWebSocket(url, Number(roomid));
+  useEffect(() => {
+    getDanmuConfig(roomid).then(res => {
+      if (res.data) {
+        const url = `wss://${res.data.host_list[2].host}/sub`;
+        const chatWebSocket = new ChatWebSocket(url, Number(roomid));
 
-      chatWebSocket.on(Events.HEARTBEAT_REPLY, ({onlineNum}) => {
-        // onlineNumRef.current.innerHTML = `人气：${formatTenThousand(onlineNum)}`;
-      });
+        chatWebSocket.on(Events.HEARTBEAT_REPLY, ({ onlineNum }) => {
+          // onlineNumRef.current.innerHTML = `人气：${formatTenThousand(onlineNum)}`;
+        });
 
-      chatWebSocket.on(Events.MESSAGE_RECEIVE, (data) => {
-        setChatData(data)
-        // data.forEach(function(item) {
-        //   sendMsg(item);
-        //   if (item.cmd === "DANMU_MSG") {
-        //     const barragData = {
-        //       color: "#" +Number(item.info[0][3]).toString(16),
-        //       content: item.info[1]
-        //     };
-        //     // 发送弹幕
-        //     // videoPlayerRef.current.sendBarrage(barragData);
-        //   }
-        // });
-      });
-    }
-   })
- },[])
+        chatWebSocket.on(Events.MESSAGE_RECEIVE, (data) => {
+          //  setChatData(data)
+          data.forEach(function (item) {
+            if (item.cmd === "DANMU_MSG") {
+              // const barrage = [
+              //   "#" + Number(item.info[0][3]).toString(16),
+              //    item.info[1]
+              // ];
+              const arr:any[] = []
+              arr.push(item) 
+              // setChatData(arr) 
+              setDanmu(arr as any)
+              // 发送弹幕
+              // videoPlayerRef.current.sendBarrage(barragData);
+            }
+          });
+        });
+
+      }
+    })
+
+  },[])
 
 
 
@@ -68,7 +74,7 @@ const LiveRoom = (props) => {
         </div>
       </div>
       <div className='livePlayer'>
-        <VideoPlayer isLive={true} playerUrl={streaming} />
+        <VideoPlayer isLive={true} playerUrl={streaming} danmu={danmu} />
       </div>
       <div className='liveInfo'>
         <div className='avatar'>
@@ -88,7 +94,7 @@ const LiveRoom = (props) => {
           <div><span className={activeBar === 0 ? '' : 'activeBar'} onClick={() => { setActiveBar(1) }}>简介</span></div>
         </div>
         {
-          activeBar === 0 ? <ChatList chatData={chatData} /> :
+          activeBar === 0 ? <ChatList chatData={danmu} /> :
             <div className='description'>
               <div dangerouslySetInnerHTML={{ __html: room_info.description }}>
               </div>

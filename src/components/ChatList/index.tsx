@@ -9,26 +9,32 @@ const ChatList = (props) => {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    console.log(chatData)
-     if (!chatData.length) return;
-    const msg = chatData[0];
+    console.log(chatData,111)
+    // if (!chatData.length) return;
     const div = document.createElement('div');
-    switch (msg.cmd) {
-      case 'DANMU_MSG':
-        const manager = msg.info[2][2] === 1 ? `<span class='manager'>房管</span>`:"";
-        const styleColor = msg.info[2][7]
-        div.innerHTML =  `${manager}<span class='uname' style='color:${styleColor}'>${msg.info[2][1]}：</span><span class='content'>${msg.info[1]}</span>`
-        break;
-      default:
-    }
+    chatData.forEach(item => {
+      switch (item.cmd) {
+        case 'DANMU_MSG':
+          const manager = item.info[2][2] === 1 ? `<span class='manager'>房管</span>` : "";
+          const styleColor = item.info[2][7]
+          div.innerHTML = `${manager}<span class='uname' style='color:${styleColor}'>${item.info[2][1]}：</span><span class='content'>${item.info[1]}</span>`
+          break;
+        // case 'SEND_GIFT':
 
-    setTimeout(() => {
+        //   break;
+        default:
+        
+      }
+    })
+
+    const timer = setTimeout(() => {
       let needScorll = true;
-      console.log((chatRef as any).current.scrollTop,(chatRef as any).current.clientHeight);
+      // console.log((chatRef as any).current.scrollTop,(chatRef as any).current.clientHeight);
       (chatRef as any).current.appendChild(div)
 
-    }, 300)
+    }, 100)
 
+    return () => clearTimeout(timer)
   }, [chatData])
 
   return (

@@ -10,7 +10,7 @@ const Slider = (props) => {
   const { bannerList } = props
 
   useEffect(() => {
-    if (bannerList.length && !sliderSwiper) {
+    if (bannerList && !sliderSwiper) {
       let sliderSwiper = new Swiper(".slider-container", {
         loop: true,
         autoplay: {
@@ -21,12 +21,12 @@ const Slider = (props) => {
       });
       setSliderSwiper(sliderSwiper);
     }
-  }, [bannerList.length, sliderSwiper])
+  }, [bannerList, sliderSwiper])
 
   return (
     <div className="slider-container">
       <div className="swiper-wrapper">
-        {bannerList.length?
+        {bannerList?
           bannerList.map((slider, i) => {
             return (
               <div className="swiper-slide" key={slider.id}>

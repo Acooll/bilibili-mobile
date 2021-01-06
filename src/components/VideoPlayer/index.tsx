@@ -27,7 +27,7 @@ const VideoPlayer = (props) => {
   let barrageTimer
 
   const domPool: any[] = []
-  const danmuPool: any[] = []
+  let danmuPool: any[] = []
   const MAX_DANMU_COUNT = 6
   let start = 0
 
@@ -39,20 +39,24 @@ const VideoPlayer = (props) => {
       barrageTimer = setInterval(() => {
         if (domPool.length) {
           let dom = domPool.shift()
+          danmuPool.shift()
+          console.log('im send', domPool, dom);
           sendDanmu(dom)
         } else {
+          console.log('again')
           start += 6
           init()
         }
-      }, 200)
+      }, 1000)
     }
     return () => clearInterval(barrageTimer)
 
-  }, [barrageOn, playing])
+  }, [barrageOn, playing, domPool])
 
 
 
   const init = () => {
+    console.log(danmu, 889)
     let dom = document.querySelectorAll('.danmu')
     if (dom.length) {
       for (let i = 0; i < dom.length; i++) {
@@ -62,27 +66,28 @@ const VideoPlayer = (props) => {
       }
     }
 
-
-    const indexs: any[] = []
-
-    danmu.forEach((item, i) => {
-      if (parseInt(item.time, 10) === parseInt((videoRef as any).current.currentTime, 10)) {
-        danmuPool.push(item)
-        indexs.push(i)
-      }
-    })
-
-    indexs.forEach((index, i) => {
-      danmu.splice(index - i, 1)
-    })
-
-    // console.log(danmuPool, 'pool')
-    if (danmuPool.length) {
+    if (!isLive) {
+      const indexs: any[] = []
+      danmu.forEach((item, i) => {
+        if (parseInt(item.time, 10) === parseInt((videoRef as any).current.currentTime, 10)) {
+          danmuPool.push(item)
+          indexs.push(i)
+        }
+      })
+      indexs.forEach((index, i) => {
+        danmu.splice(index - i, 1)
+      })
+    } else {
+      danmuPool = danmu
+      console.log(danmuPool, 121121, danmu)
+    }
+    if (danmuPool.length ) {
+      console.log(56511111111111111111111)
       for (let i = 0; i < danmuPool.length; i++) {
         let div = document.createElement('div')
         div.className = 'danmu'
-        div.innerHTML = danmuPool[i].content;
-        div.style.color = "#" + Number(danmuPool[i].decimalColor).toString(16)
+        isLive ? div.innerHTML = danmuPool[0].info[1] : div.innerHTML = danmuPool[i].content;
+        isLive ? div.style.color = "#" + Number(danmuPool[0].info[0][3]).toString(16) : div.style.color = "#" + Number(danmuPool[i].decimalColor).toString(16)
         div.style.position = 'absolute'
         div.style.top = `${Math.random() * 30}vw`
         div.style.marginLeft = '100vw'
@@ -110,7 +115,12 @@ const VideoPlayer = (props) => {
   const sendDanmu = (dom) => {
     const x = dom.offsetLeft + dom.clientWidth
     dom.style.transform = `translateX(${-x}px)`
-    dom.style.transition = `all ${Math.round(1500 / x)}s linear`
+    if (isLive) {
+      dom.style.transition = `all 5s linear`
+    } else {
+      dom.style.transition = `all ${Math.round(1500 / x)}s linear`
+    }
+
   }
 
 
@@ -210,8 +220,8 @@ const VideoPlayer = (props) => {
       (videoDom as any).pause();
 
     } else {
+      (bottomControlRef as any).current.style.display = 'block';
       if (!isLive) {
-        (bottomControlRef as any).current.style.display = 'block'
         closePic(true)
       }
       setTimeout(() => {
@@ -249,7 +259,6 @@ const VideoPlayer = (props) => {
         <div className='danmuContainer' ref={danmuRef}></div>
         <video
           src={isLive ? '' : playerUrl.url}
-          // controls={isLive ? false : true}
           ref={videoRef} height="100%" width="100%" preload="auto"
           x5-playsinline="true"
           webkit-playsinline="true"
@@ -257,18 +266,21 @@ const VideoPlayer = (props) => {
         <div className='control' ref={controlRef}>
           <img className='control-play' src={playing ? IconPause : IconPlay} onClick={changePlay} alt="" />
           <div className='bottom-control' ref={bottomControlRef} >
-            <div className='barContainer'>
-              <div className='barDot' ref={dotRef}  >
-              </div>
-              <div className='allBar'>
-                <div className='activeBar' ref={barRef}></div>
-              </div>
-            </div>
+
+            {
+              isLive ? null :
+                <div className='barContainer' >
+                  <div className='barDot' ref={dotRef}  >
+                  </div>
+                  <div className='allBar'>
+                    <div className='activeBar' ref={barRef}></div>
+                  </div>
+                </div>
+            }
+
             <img onClick={toggleSend} className='icon-barrage' src={barrageOn ? IconBarrageOn : IconBarrageOff} alt="" />
             <img className='icon-fullscreen' src={IconFullScreen} alt="" />
           </div>
-
-
         </div>
 
       </div>
