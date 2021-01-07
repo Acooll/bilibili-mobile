@@ -16,6 +16,7 @@ const VideoPlayer = (props) => {
 
   const { playerUrl, isLive, closePic, danmu } = props
   const videoRef = useRef(null)
+  const playerRef = useRef(null)
   const danmuRef = useRef(null)
   const controlRef = useRef(null)
   const bottomControlRef = useRef(null)
@@ -25,6 +26,8 @@ const VideoPlayer = (props) => {
   const [showControls, setShowControls] = useState(false)
   const [barrageOn, setBarrageOn] = useState(false)
   let barrageTimer
+  let time
+  let timer
 
   const domPool: any[] = []
   let danmuPool: any[] = []
@@ -47,7 +50,7 @@ const VideoPlayer = (props) => {
           start += 6
           init()
         }
-      }, 1000)
+      }, 300)
     }
     return () => clearInterval(barrageTimer)
 
@@ -81,7 +84,7 @@ const VideoPlayer = (props) => {
       danmuPool = danmu
       // console.log(danmuPool, 121121, danmu)
     }
-    if (danmuPool.length ) {
+    if (danmuPool.length) {
       // console.log(56511111111111111111111)
       for (let i = 0; i < danmuPool.length; i++) {
         let div = document.createElement('div')
@@ -124,8 +127,12 @@ const VideoPlayer = (props) => {
   }
 
 
+
   useEffect(() => {
-    (bottomControlRef as any).current.style.display = 'none'
+    (bottomControlRef as any).current.style.display = 'none';
+    let dom = videoRef.current;
+
+
     if (isLive && playerUrl.length) {
       const videoDom = videoRef.current
       const videoSrc = playerUrl[3].url
@@ -146,24 +153,35 @@ const VideoPlayer = (props) => {
 
       }
     } else if (playerUrl.length) {
+      (dom as any).addEventListener('timeupdate', handleUpdate)
       initVideo()
     }
 
-    // return()=>  (videoRef as any).current.removeEventListener('timeupdate')
+    return () => (dom as any).removeEventListener('timeupdate', handleUpdate)
+
   }, [playerUrl])
 
+
+  const handleUpdate = () => {
+    const bar = barRef.current;
+    const dot = dotRef.current;
+    const progress = ((videoRef as any).current.currentTime * 1000) / playerUrl.length * 100;
+    (bar as any).style.width = `${progress}%`;
+    (dot as any).style.marginLeft = `${progress / 2.22}vw`;
+
+  }
 
 
   const initVideo = () => {
     const bar = barRef.current;
     const dot = dotRef.current;
     const video = videoRef.current;
-    (videoRef as any).current.addEventListener('timeupdate', () => {
-      const progress = ((videoRef as any).current.currentTime * 1000) / playerUrl.length * 100;
-      (bar as any).style.width = `${progress}%`;
-      (dot as any).style.marginLeft = `${progress / 2.22}vw`;
+    // (videoRef as any).current.addEventListener('timeupdate', () => {
+    //   const progress = ((videoRef as any).current.currentTime * 1000) / playerUrl.length * 100;
+    //   (bar as any).style.width = `${progress}%`;
+    //   (dot as any).style.marginLeft = `${progress / 2.22}vw`;
 
-    });
+    // });
 
     /**
       * 进度条事件
@@ -211,11 +229,29 @@ const VideoPlayer = (props) => {
 
   }
 
-  const changePlay = (e) => {
+
+  useEffect(() => {
+    let dom = playerRef.current;
+    if (playerUrl) {
+      (dom as any).addEventListener('click', handleChangePlay)
+    }
+
+    return () => {
+      clearTimeout(time)
+    }
+  }, [playerUrl, playing])
+
+  // const handleClear = () =>{
+  //   clearTimeout(time)
+  // }
+
+  const handleChangePlay = (e) => {
+    clearTimeout(time)
     e.stopPropagation();
     const videoDom = videoRef.current;
 
     if (playing) {
+      console.log('false')
       setPlaying(false);
       (videoDom as any).pause();
 
@@ -224,7 +260,7 @@ const VideoPlayer = (props) => {
       if (!isLive) {
         closePic(true)
       }
-      setTimeout(() => {
+      time = setTimeout(() => {
         (controlRef as any).current.style.display = 'none'
       }, 5000)
       setPlaying(true);
@@ -232,7 +268,7 @@ const VideoPlayer = (props) => {
     }
   }
 
-  let timer
+
 
   const toggleShowControls = () => {
     clearTimeout(timer)
@@ -264,7 +300,7 @@ const VideoPlayer = (props) => {
           webkit-playsinline="true"
         />
         <div className='control' ref={controlRef}>
-          <img className='control-play' src={playing ? IconPause : IconPlay} onClick={changePlay} alt="" />
+          <img className='control-play' src={playing ? IconPause : IconPlay} ref={playerRef} alt="" />
           <div className='bottom-control' ref={bottomControlRef} >
 
             {

@@ -5,12 +5,13 @@ import './style.styl'
 import axios from 'axios'
 import { connect } from "react-redux";
 import SearchDetail from '../../components/SeachDetail'
+
+import { Helmet } from "react-helmet";
+
 const URL_HOT = 'https://s.search.bilibili.com/main/hotword'
 
-
-
 const Search = (props) => {
-  const { searchList, getSearchListDispatch } = props
+  const { searchList, getSearchListDispatch, history, searchSuggest, getSearchSuggestDispatch } = props
 
   const [searchWords, setSearchWords] = useState('')
   const [hotWords, setHotWords] = useState([])
@@ -18,7 +19,7 @@ const Search = (props) => {
   const [showList, setShowList] = useState(false)
 
   const back = () => {
-    props.history.push('/index')
+    window.history.back()
   }
   useEffect(() => {
     if (!hotWords.length) {
@@ -41,7 +42,8 @@ const Search = (props) => {
       setShowList(false)
     } else {
       setShowList(true)
-      getSearchListDispatch(searchWords)
+      getSearchListDispatch(e.target.value)
+      getSearchSuggestDispatch(e.target.value)
     }
   }
 
@@ -51,8 +53,16 @@ const Search = (props) => {
     }
   }
 
+  const setSearch = (e) => {
+    getSearchListDispatch(e)
+    setShowContent(true)
+  }
+
   return (
     <div>
+      <Helmet>
+        <title>Bilibili-( ゜- ゜)つロ干杯~-搜索</title>
+      </Helmet>
       <div className='searchHeader'>
         <div className='searchBar'>
           <img src={IconSearch} alt="" />
@@ -61,10 +71,9 @@ const Search = (props) => {
         <div className='cancel' onClick={back}>取消</div>
       </div>
 
-
       <div>
         {
-          showContent ? <SearchDetail searchList={searchList} /> :
+          showContent ? <SearchDetail searchList={searchList} history={history} /> :
             <>
               <div className='hotSearch'>
                 <div className='hotTitle'>大家都在搜</div>
@@ -73,7 +82,7 @@ const Search = (props) => {
                     hotWords.length ?
                       hotWords.map(item => {
                         return (
-                          <div className='hotItem' key={(item as any).id}>
+                          <div className='hotItem' key={(item as any).id} onClick={() => setSearch((item as any).keyword)}>
                             {(item as any).keyword}
                           </div>
                         )
@@ -84,10 +93,10 @@ const Search = (props) => {
               {
                 showList ? <div className='searchList'>
                   {
-                    searchList.map(item => {
+                    searchSuggest.map((item, i) => {
                       return (
-                        <div key={item.aid}>
-                          {item.author}
+                        <div key={i} onClick={(e) => setSearch(item.value)} >
+                          {item.value}
                         </div>
                       )
                     })
@@ -113,7 +122,9 @@ export default connect(
       getSearchListDispatch(props) {
         dispatch(actionTypes.fetchSearchList(props))
       },
-
+      getSearchSuggestDispatch(props) {
+        dispatch(actionTypes.fetchSearchSuggest(props))
+      },
     };
   }
 )(Search);

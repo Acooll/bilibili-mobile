@@ -7,10 +7,9 @@ import IconDownload from '../../assets/download.png'
 import IconBan from '../../assets/ban.png'
 import classnames from 'classnames'
 import IconArrowDown from '../../assets/arrow_down.png'
-import IconArrowUp from '../../assets/arrow_up.png'
 import { timestampToTime, tenThousand } from '../../util'
 import Comments from '../../components/Comments'
-
+import LazyLoad from 'react-lazyload'
 
 const PlayerDetail = (props) => {
   const { playerDetail, detailRecommend, history,comments } = props
@@ -28,9 +27,7 @@ const PlayerDetail = (props) => {
     }
   }
 
-  useEffect(() => {
-
-  })
+ 
 
 
   return (
@@ -47,7 +44,7 @@ const PlayerDetail = (props) => {
 
         {
           spread ? <div className='detail_info'>
-            <div className='author'>
+            <div className='author' >
               <img className='avatar' src={author.face} alt="" />
               <div>
                 <div className='author_name'>{author.name}</div>
@@ -105,9 +102,11 @@ const PlayerDetail = (props) => {
           {
             detailRecommend.map((item) => {
               return (
-                <div key={item.aid} className='listItem' onClick={() => history.push(`/space?mid=${item.owner.mid}`)}>
+                <div key={item.aid} className='listItem' onClick={()=> history.push(`/video?aid=${item.aid}&bvid=${item.bvid}`)}>
                   <div>
+                  <LazyLoad placeholder={<img width="100%" height="100%" src='http://s1.hdslb.com/bfs/static/blive/live-web-h5/static/images/img_loading.a3516567.png' alt="m"/>}>
                     <img src={item.pic} alt="" />
+                    </LazyLoad>
                   </div>
                   <div>{item.title}</div>
                 </div>
@@ -116,7 +115,7 @@ const PlayerDetail = (props) => {
           }
         </div>
         {
-          selectComments? <Comments comments={comments} /> : null
+          selectComments? <Comments comments={comments} history={history} /> : null
         } 
       </div>
      

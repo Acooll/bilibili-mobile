@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import * as actionTypes from '../../store/actions'
 import PlayerDetail from '../../components/PlayerDetail'
 import Comments from '../../components/Comments'
+import {Helmet} from 'react-helmet'
 
 const Video = (props) => {
   const { location, playerUrl,
@@ -23,7 +24,7 @@ const Video = (props) => {
     getDetailRecommendDispatch(aid)
     getCommentsDispatch(aid)
     // eslint-disable-next-line
-  }, [])
+  }, [Number(aid)])
 
   useEffect(() => {
     if (playerDetail !== '') {
@@ -39,6 +40,10 @@ const Video = (props) => {
 
   return (
     <div className='videoHome'>
+      <Helmet>
+        <title>Bilibili-( ゜- ゜)つロ干杯~-视频</title>
+      </Helmet>
+      <Header />
       <Header />
       <div className='videoContent'>
         {

@@ -1,15 +1,16 @@
 import React from 'react'
 import './style.styl'
 import IconRight from '../../assets/right.png'
+import LazyLoad from 'react-lazyload'
 
 const LiveTypes = (props) => {
 
-  const { liveList,history } = props
+  const { liveList, history } = props
 
   return (
     <>
       {
-        liveList.map((list,i) => {
+        liveList.map((list, i) => {
           return (
             <div key={i} className='liveList'>
               <div className='topBg'></div>
@@ -23,11 +24,13 @@ const LiveTypes = (props) => {
                 </div>
                 <div className='itemContent'>
                   {
-                    list.list.map((item,a) => {
+                    list.list.map((item, a) => {
                       return (
-                        <div key={a} className='liveItem' onClick={()=>history.push(`/live_room?roomid=${item.roomid}`)}>
+                        <div key={a} className='liveItem' onClick={() => history.push(`/live_room?roomid=${item.roomid}`)}>
                           <div>
-                            <img src={item.cover} alt="" />
+                            <LazyLoad placeholder={<img width="100%" height="100%" src='http://s1.hdslb.com/bfs/static/blive/live-web-h5/static/images/img_loading.a3516567.png' alt="m" />}>
+                              <img src={item.cover} alt="" />
+                            </LazyLoad>
                           </div>
                           <div className='liveTitle'>{item.title}</div>
                         </div>

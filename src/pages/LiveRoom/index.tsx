@@ -7,12 +7,12 @@ import VideoPlayer from '../../components/VideoPlayer'
 import { getDanmuConfig } from '../../api'
 import ChatWebSocket, { Events } from "./ChatWS";
 import ChatList from '../../components/ChatList'
+import {Helmet} from 'react-helmet'
 
 const LiveRoom = (props) => {
   const { location, getStreamingDispatch, streaming, streamInfo, getStreamInfoDispatch } = props
   const roomid = location.search.match(/\d+/)
   const [activeBar, setActiveBar] = useState(0)
-   const [chatData, setChatData] = useState({})
   const [danmu, setDanmu] = useState([])
   useEffect(() => {
     getStreamInfoDispatch(roomid)
@@ -63,6 +63,9 @@ const LiveRoom = (props) => {
 
   return (
     <div>
+      <Helmet>
+        <title>Bilibili-( ゜- ゜)つロ干杯~-直播间</title>
+      </Helmet>
       <div className='roomHeader'>
         <a href="/index" className='logo'>
           <Logo />

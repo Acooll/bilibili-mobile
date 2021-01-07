@@ -12,7 +12,11 @@ import {
   getUpInfo,
   getRegion,
   getDanmu,
-  getComments
+  getComments,
+  getRankingList,
+  getSearchSuggest,
+  getUpVideo,
+  getUpStat
 } from '../api'
 
 export const SET_BANNERS = 'SET_BANNERS'
@@ -28,6 +32,10 @@ export const SET_UP_INFO = 'SET_UP_INFO'
 export const SET_REGION = 'SET_REGION'
 export const SET_DANMU = 'SET_DANMU'
 export const SET_COMMENTS = 'SET_COMMENTS'
+export const SET_RANKING_LIST = 'SET_RANKING_LIST'
+export const SET_SEARCH_SUGGEST = 'SET_SEARCH_SUGGEST'
+export const SET_UP_VIDEO = 'SET_UP_VIDEO'
+export const SET_UP_STAT = 'SET_UP_STAT'
 
 export const setBanners = (banners: Array<any>): AnyAction => ({
   type: SET_BANNERS,
@@ -99,9 +107,28 @@ export const setDanmu = (danmu: Array<any>): AnyAction => ({
 })
 
 
+export const setRankList = (rankingList: Array<any>): AnyAction => ({
+  type: SET_RANKING_LIST,
+  rankingList
+})
 
 
 
+export const setSearchSuggest = (searchSuggest: Array<any>): AnyAction => ({
+  type: SET_SEARCH_SUGGEST,
+  searchSuggest
+})
+
+export const setUpVideo = (upVideo: Array<any>): AnyAction => ({
+  type: SET_UP_VIDEO,
+  upVideo
+})
+
+
+export const setUpStat = (upStat: Array<any>): AnyAction => ({
+  type: SET_UP_STAT,
+  upStat
+})
 
 
 
@@ -254,6 +281,51 @@ export const fetchDanmu = (props) => {
       dispatch(setDanmu(res.data))
     }).catch(err => {
       console.log('danmu数据获取失败！', err)
+    })
+  }
+}
+
+
+export const fetchRankingList = (props) => {
+  return (dispatch) => {
+    getRankingList(props).then(res => {
+      dispatch(setRankList(res.data.list))
+    }).catch(err => {
+      console.log('ranking数据获取失败！', err)
+    })
+  }
+}
+
+export const fetchSearchSuggest = (props) => {
+  return (dispatch) => {
+    getSearchSuggest(props).then(res => {
+
+      dispatch(setSearchSuggest((res as any).result.tag))
+    }).catch(err => {
+      console.log('search数据获取失败！', err)
+    })
+  }
+}
+
+
+export const fetchUpVideo = (props) => {
+  return (dispatch) => {
+    getUpVideo(props).then(res => {
+
+      dispatch(setUpVideo(res.data.list.vlist))
+    }).catch(err => {
+      console.log('upVideo数据获取失败！', err)
+    })
+  }
+}
+
+export const fetchUpStat = (props) => {
+  return (dispatch) => {
+    getUpStat(props).then(res => {
+
+      dispatch(setUpStat(res.data))
+    }).catch(err => {
+      console.log('upStat数据获取失败！', err)
     })
   }
 }

@@ -22,5 +22,16 @@ module.exports = function(app) {
         '^/local':''
       }
     }),
-  )
+  );
+  app.use(
+    '/search',
+    createProxyMiddleware({
+      target: 'https://s.search.bilibili.com',
+      changeOrigin: true,
+      ws:true,
+      pathRewrite:{
+        '^/search':''
+      }
+    }),
+  );
 };

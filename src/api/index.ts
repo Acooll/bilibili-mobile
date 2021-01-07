@@ -1,4 +1,4 @@
-import { request, http, fetch } from './axios'
+import { request, http, fetch, search } from './axios'
 
 export const getBanner = () => {
   return request.get('/x/web-show/res/loc?pf=7&id=1695')
@@ -56,4 +56,22 @@ export const getDanmu = (props) => {
 export const getDanmuConfig = (props) => {
   return http.get(`/xlive/web-room/v1/index/getDanmuInfo?id=${props}`)
 }
+
+export const getRankingList = (props) => {
+  return request.get(`/x/web-interface/ranking/v2?rid=${props}`)
+}
+
+
+export const getSearchSuggest = (props) => {
+  return search.get(`/main/suggest?func=suggest&suggest_type=accurate&sub_type=tag&main_ver=v1&highlight=&bangumi_acc_num=3&special_acc_num=0&upuser_acc_num=0&tag_num=10&term=${props}&rnd=0.4420695060880957`)
+}
+
+export const getUpVideo = (props) => {
+  return request.get(`/x/space/arc/search?pn=1&ps=100&order=click&keyword=&mid=${props}`)
+}
+
+export const getUpStat= (props) => {
+  return request.get(`/x/relation/stat?vmid=${props}`)
+}
+
 

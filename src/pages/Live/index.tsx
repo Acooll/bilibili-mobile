@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import * as actionTypes from '../../store/actions';
 import { connect } from "react-redux";
-
+import { Helmet } from 'react-helmet'
 import Header from '../../components/Header'
 import './style.styl'
 import Swiper from '../../components/Swiper'
@@ -21,6 +21,9 @@ const Live = (props) => {
 
   return (
     <div>
+      <Helmet>
+        <title>Bilibili-( ゜- ゜)つロ干杯~-直播</title>
+      </Helmet>
       <Header />
       <div className='liveBar'>
         <div>首页</div>

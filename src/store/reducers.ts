@@ -10,7 +10,11 @@ import { SET_BANNERS,
   SET_UP_INFO,
   SET_REGION,
   SET_DANMU,
-  SET_COMMENTS
+  SET_COMMENTS,
+  SET_RANKING_LIST,
+  SET_SEARCH_SUGGEST,
+  SET_UP_VIDEO,
+  SET_UP_STAT
 } from './actions'
 import { AnyAction, combineReducers } from "redux"
 
@@ -29,7 +33,11 @@ const initialState = {
   upInfo:'',
   region:[],
   danmu:[],
-  comments:[]
+  comments:[],
+  rankingList:[],
+  searchSuggest:[],
+  upVideo:[],
+  upStat:''
 }
 
 
@@ -158,6 +166,44 @@ function danmu(danmu= initialState.danmu, action: AnyAction){
 }
 
 
+function rankingList(rankingList= initialState.rankingList, action: AnyAction){
+  switch(action.type){
+    case SET_RANKING_LIST:
+      return action.rankingList
+      default:
+        return rankingList
+  }
+}
+
+
+function searchSuggest(searchSuggest= initialState.searchSuggest, action: AnyAction){
+  switch(action.type){
+    case SET_SEARCH_SUGGEST:
+      return action.searchSuggest
+      default:
+        return searchSuggest
+  }
+}
+
+function upVideo(upVideo= initialState.upVideo, action: AnyAction){
+  switch(action.type){
+    case SET_UP_VIDEO:
+      return action.upVideo
+      default:
+        return upVideo
+  }
+}
+
+
+function upStat(upStat= initialState.upStat, action: AnyAction){
+  switch(action.type){
+    case SET_UP_STAT:
+      return action.upStat
+      default:
+        return upStat
+  }
+}
+
 const reducer = combineReducers({
   banners,
   recommendList,
@@ -171,7 +217,11 @@ const reducer = combineReducers({
   streamInfo,
   upInfo,
   region,
-  danmu
+  danmu,
+  rankingList,
+  searchSuggest,
+  upVideo,
+  upStat
 })
 
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import * as actionTypes from '../../store/actions';
 import { connect } from "react-redux";
-
+import { Helmet } from 'react-helmet'
 import Header from '../../components/Header'
 import './style.styl'
 import axios from 'axios'
@@ -13,14 +13,17 @@ const LivesArea = (props) => {
     axios.get('/live/room/v1/AppIndex/getAreas?device=phone&platform=ios&scale=3&build=3939').then(res => {
       setAreas(res.data.data)
     })
-    axios.get('/local/av/barrage/275727637').then(res=>{
+    axios.get('/local/av/barrage/275727637').then(res => {
       console.log(res)
     })
-  },[])
+  }, [])
 
 
   return (
     <div>
+      <Helmet>
+        <title>Bilibili-( ゜- ゜)つロ干杯~-直播分类</title>
+      </Helmet>
       <Header />
       <div className='liveBar'>
         <div>首页</div>
