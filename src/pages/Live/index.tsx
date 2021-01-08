@@ -6,11 +6,11 @@ import Header from '../../components/Header'
 import './style.styl'
 import Swiper from '../../components/Swiper'
 import LiveTypes from '../../components/LiveTypes'
-
+import Loading from '../../components/Loading'
 
 const Live = (props) => {
 
-  const { getLiveListDispatch, liveList, banners } = props
+  const { getLiveListDispatch, liveList, banners, loading } = props
 
 
   useEffect(() => {
@@ -35,7 +35,11 @@ const Live = (props) => {
       <div className='liveBanner'>
         <Swiper bannerList={banners} />
       </div>
+      {
+        loading ? <Loading /> : null
+      }
       <LiveTypes liveList={liveList.slice(13)} history={props.history} />
+      
     </div>
   )
 }

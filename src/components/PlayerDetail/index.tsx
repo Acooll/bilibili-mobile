@@ -45,7 +45,7 @@ const PlayerDetail = (props) => {
         {
           spread ? <div className='detail_info'>
             <div className='author' >
-              <img className='avatar' src={author.face} alt="" />
+              <img className='avatar' src={author.face} alt=""  onClick={()=>history.push(`/space?mid=${author.mid}`)} />
               <div>
                 <div className='author_name'>{author.name}</div>
                 <div className='fans'>60.5万粉丝</div>
@@ -78,7 +78,7 @@ const PlayerDetail = (props) => {
           </div> :
             <div className='video_tool'>
               <div className='author'>
-                <img className='avatar' src={author.face} alt="" />
+                <img className='avatar' src={author.face} onClick={()=>history.push(`/space?mid=${author.mid}`)} alt="" />
                 <div className='author_name'>{author.name}</div>
               </div>
               <div className='tool'>
@@ -104,7 +104,7 @@ const PlayerDetail = (props) => {
               return (
                 <div key={item.aid} className='listItem' onClick={()=> history.push(`/video?aid=${item.aid}&bvid=${item.bvid}`)}>
                   <div>
-                  <LazyLoad placeholder={<img width="100%" height="100%" src='http://s1.hdslb.com/bfs/static/blive/live-web-h5/static/images/img_loading.a3516567.png' alt="m"/>}>
+                  <LazyLoad placeholder={<img width="80%" height="60%" src='http://s1.hdslb.com/bfs/static/blive/live-web-h5/static/images/img_loading.a3516567.png' alt="m"/>}>
                     <img src={item.pic} alt="" />
                     </LazyLoad>
                   </div>

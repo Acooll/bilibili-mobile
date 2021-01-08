@@ -14,7 +14,7 @@ import IconFemale from '../../assets/female.png'
 
 
 const Space = (props) => {
-  const { upInfo, getUpInfoDispatch, upVideo, getUpVideoDispatch ,history,upStat,getUpStatDispatch} = props
+  const { upInfo, getUpInfoDispatch, upVideo, getUpVideoDispatch ,history,upStat,getUpStatDispatch,upAchieveLike,getUpAchieveLikeDispatch} = props
   const [choiceVideo, setChoiceVideo] = useState(false)
   const mid = props.location.search.match(/\d+/)
 
@@ -22,6 +22,7 @@ const Space = (props) => {
     getUpInfoDispatch(mid)
     getUpVideoDispatch(mid)
     getUpStatDispatch(mid)
+    // getUpAchieveLikeDispatch(mid)
   }, [])
 
   return (
@@ -54,7 +55,7 @@ const Space = (props) => {
               </div>
               <div className='columLine'></div>
               <div className='item'>
-                <div className='number'>4532</div>
+                <div className='number'>28.3万</div>
                 <div className='type'>获赞</div>
               </div>
             </div>
@@ -122,6 +123,9 @@ export default connect(
       },
       getUpStatDispatch(props) {
         dispatch(actionTypes.fetchUpStat(props))
+      },
+      getUpAchieveLikeDispatch(props) {
+        dispatch(actionTypes.fetchUpAchieveLike(props))
       },
     };
   }

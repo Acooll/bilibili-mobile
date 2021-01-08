@@ -5,9 +5,10 @@ import RankList from '../../components/RankList'
 import * as actionTypes from '../../store/actions';
 import { connect } from "react-redux";
 import {Helmet} from 'react-helmet'
+import Loading from '../../components/Loading'
 
 const Ranking = (props) =>{
-  const {rankingList,getRankingListDispatch,location,history} = props
+  const {rankingList,getRankingListDispatch,location,history,loading} = props
   const rid = location.search.match(/\d+/)
 
   useEffect(()=>{
@@ -25,6 +26,9 @@ const Ranking = (props) =>{
         <div>排行榜</div>
       </div>
       <div>
+      {
+          loading? <Loading />  : null
+        }
         <RankList rankingList={rankingList}  history={history} />
       </div>
     </div>

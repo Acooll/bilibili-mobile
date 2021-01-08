@@ -14,7 +14,10 @@ import { SET_BANNERS,
   SET_RANKING_LIST,
   SET_SEARCH_SUGGEST,
   SET_UP_VIDEO,
-  SET_UP_STAT
+  SET_UP_STAT,
+  SET_LOADING,
+  SET_UP_ACHIEVE_LIKE,
+  SET_ALL_LIVE_LIST
 } from './actions'
 import { AnyAction, combineReducers } from "redux"
 
@@ -37,7 +40,10 @@ const initialState = {
   rankingList:[],
   searchSuggest:[],
   upVideo:[],
-  upStat:''
+  upStat:'',
+  loading:true,
+  upAchieveLike:'',
+  allLiveList:[]
 }
 
 
@@ -114,6 +120,16 @@ function liveList(liveList = initialState.liveList, action: AnyAction){
       return action.liveList
       default:
         return liveList;
+  }
+}
+
+
+function allLiveList(allLiveList = initialState.allLiveList, action: AnyAction){
+  switch(action.type){
+    case SET_ALL_LIVE_LIST:
+      return action.allLiveList
+      default:
+        return allLiveList;
   }
 }
 
@@ -204,6 +220,25 @@ function upStat(upStat= initialState.upStat, action: AnyAction){
   }
 }
 
+function upAchieveLike(upAchieveLike= initialState.upAchieveLike, action: AnyAction){
+  switch(action.type){
+    case SET_UP_ACHIEVE_LIKE:
+      return action.upAchieveLike
+      default:
+        return upAchieveLike
+  }
+}
+
+function loading(loading= initialState.loading, action: AnyAction){
+  switch(action.type){
+    case SET_LOADING:
+      return action.loading
+      default:
+        return loading
+  }
+}
+
+
 const reducer = combineReducers({
   banners,
   recommendList,
@@ -221,7 +256,10 @@ const reducer = combineReducers({
   rankingList,
   searchSuggest,
   upVideo,
-  upStat
+  upStat,
+  loading,
+  upAchieveLike,
+  allLiveList
 })
 
 

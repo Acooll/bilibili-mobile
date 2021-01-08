@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect } from 'react'
 import * as actionTypes from '../../store/actions';
 import Header from '../../components/Header'
 import Swiper from '../../components/Swiper/index'
@@ -7,9 +7,10 @@ import { connect } from "react-redux";
 import Recommend from '../../components/Recommend'
 import MenuBar from '../../components/MenuBar'
 import { Helmet } from "react-helmet";
+import Loading from '../../components/Loading'
 
 const Index = (props) => {
-  const { getBannerListDispatch, banners, recommendList, getRecommendListDispatch } = props
+  const { getBannerListDispatch, banners, recommendList, getRecommendListDispatch, loading } = props
   useEffect(() => {
     if (!banners) {
       getBannerListDispatch()
@@ -25,12 +26,15 @@ const Index = (props) => {
         <title>Bilibili-( ゜- ゜)つロ干杯~</title>
       </Helmet>
       <Header />
-      <MenuBar  history={props.history} chooseId={0} />
+      <MenuBar history={props.history} chooseId={0} />
       <div className='swiper_container'>
         <Swiper bannerList={banners} />
       </div>
       <div className='recommend'>
-        <Recommend recommendList={recommendList}   />
+        {
+          loading ? <Loading /> : null
+        }
+        <Recommend recommendList={recommendList} />
       </div>
 
     </div>

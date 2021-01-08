@@ -75,3 +75,12 @@ export const getUpStat= (props) => {
 }
 
 
+export const getUpAchieveLike= (props) => {
+  return request.get(`/x/space/upstat?mid=${props}`)
+}
+
+
+
+export const getAllLiveList = () => {
+  return http.get('/room/v3/Area/getRoomList?parent_area_id=0&area_id=0&sort_type=online&page=1&page_size=30&device=phone&platform=ios&scale=3&build=10000')
+}

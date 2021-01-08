@@ -16,7 +16,9 @@ import {
   getRankingList,
   getSearchSuggest,
   getUpVideo,
-  getUpStat
+  getUpStat,
+  getUpAchieveLike,
+  getAllLiveList
 } from '../api'
 
 export const SET_BANNERS = 'SET_BANNERS'
@@ -36,6 +38,9 @@ export const SET_RANKING_LIST = 'SET_RANKING_LIST'
 export const SET_SEARCH_SUGGEST = 'SET_SEARCH_SUGGEST'
 export const SET_UP_VIDEO = 'SET_UP_VIDEO'
 export const SET_UP_STAT = 'SET_UP_STAT'
+export const SET_LOADING = 'SET_LOADING'
+export const SET_UP_ACHIEVE_LIKE = 'SET_UP_ACHIEVE_LIKE'
+export const SET_ALL_LIVE_LIST = 'SET_ALL_LIVE_LIST'
 
 export const setBanners = (banners: Array<any>): AnyAction => ({
   type: SET_BANNERS,
@@ -131,6 +136,21 @@ export const setUpStat = (upStat: Array<any>): AnyAction => ({
 })
 
 
+export const setLoading = (loading: boolean): AnyAction => ({
+  type: SET_LOADING,
+  loading
+})
+
+export const setUpAchieveLike = (upAchieveLike: boolean): AnyAction => ({
+  type: SET_UP_ACHIEVE_LIKE,
+  upAchieveLike
+})
+
+
+export const setAllLiveList = (allLiveList: boolean): AnyAction => ({
+  type: SET_ALL_LIVE_LIST,
+  allLiveList
+})
 
 export const getBannerList = () => {
   return (dispatch) => {
@@ -143,14 +163,12 @@ export const getBannerList = () => {
 }
 
 
-
-
-
 export const getRecommendList = () => {
   return (dispatch) => {
     getRecommend().then(res => {
 
       dispatch(setRecommend(res.data))
+      dispatch(setLoading(false))
     }).catch(err => {
       console.log('推荐数据获取失败！')
     })
@@ -172,6 +190,7 @@ export const fetchPlayerDetail = (props) => {
   return (dispatch) => {
     getPlayerDetail(props).then(res => {
       dispatch(setPlayerDetail(res.data))
+      dispatch(setLoading(false))
     }).catch(err => {
       console.log('播放详情数据获取失败！', err)
     })
@@ -195,6 +214,7 @@ export const fetchDetailRecommend = (props) => {
   return (dispatch) => {
     getDetailRecommend(props).then(res => {
       dispatch(setDetailRecommend(res.data))
+      dispatch(setLoading(false))
     }).catch(err => {
       console.log('详情推荐数据获取失败！', err)
     })
@@ -206,6 +226,7 @@ export const fetchSearchList = (props) => {
     getSearchList(props).then(res => {
 
       dispatch(setSearchList(res.data.result[8].data))
+      dispatch(setLoading(false))
     }).catch(err => {
       console.log('搜索数据获取失败！')
     })
@@ -217,6 +238,7 @@ export const fetchLiveList = () => {
     getLiveList().then(res => {
       console.log(res.data)
       dispatch(setLiveList(res.data.module_list))
+      dispatch(setLoading(false))
       dispatch(setBanners(res.data.module_list[0].list))
 
     }).catch(err => {
@@ -225,6 +247,19 @@ export const fetchLiveList = () => {
   }
 }
 
+
+export const fetchAllLiveList = () => {
+  return (dispatch) => {
+    getAllLiveList().then(res => {
+      console.log(res.data)
+      dispatch(setAllLiveList(res.data.list))
+      dispatch(setLoading(false))
+
+    }).catch(err => {
+      console.log('all直播列表数据获取失败！', err)
+    })
+  }
+}
 
 export const fetchStreaming = (props) => {
   return (dispatch) => {
@@ -269,6 +304,7 @@ export const fetchRegion = (props) => {
     getRegion(props).then(res => {
 
       dispatch(setRegion(res.data))
+      dispatch(setLoading(false))
     }).catch(err => {
       console.log('region数据获取失败！', err)
     })
@@ -290,6 +326,7 @@ export const fetchRankingList = (props) => {
   return (dispatch) => {
     getRankingList(props).then(res => {
       dispatch(setRankList(res.data.list))
+      dispatch(setLoading(false))
     }).catch(err => {
       console.log('ranking数据获取失败！', err)
     })
@@ -326,6 +363,17 @@ export const fetchUpStat = (props) => {
       dispatch(setUpStat(res.data))
     }).catch(err => {
       console.log('upStat数据获取失败！', err)
+    })
+  }
+}
+
+export const fetchUpAchieveLike = (props) => {
+  return (dispatch) => {
+    getUpAchieveLike(props).then(res => {
+
+      dispatch(setUpAchieveLike(res.data))
+    }).catch(err => {
+      console.log('upAchieveLike数据获取失败！', err)
     })
   }
 }

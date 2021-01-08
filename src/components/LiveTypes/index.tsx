@@ -43,6 +43,7 @@ const LiveTypes = (props) => {
           )
         })
       }
+      <div className='allType' onClick={()=>history.push(`/lives_area`)}>全部分类</div>
     </>
   )
 }

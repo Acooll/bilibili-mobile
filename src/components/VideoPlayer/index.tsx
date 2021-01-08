@@ -37,6 +37,7 @@ const VideoPlayer = (props) => {
 
 
   useEffect(() => {
+    setBarrageOn(Boolean(Number(window.localStorage.getItem('barrageOn'))))
     if (barrageOn && playing) {
       init()
       barrageTimer = setInterval(() => {
@@ -110,8 +111,10 @@ const VideoPlayer = (props) => {
     e.stopPropagation()
     if (barrageOn) {
       setBarrageOn(false)
+      window.localStorage.setItem('barrageOn','0')
     } else {
       setBarrageOn(true)
+      window.localStorage.setItem('barrageOn','1')
     }
   }
 
@@ -260,9 +263,9 @@ const VideoPlayer = (props) => {
       if (!isLive) {
         closePic(true)
       }
-      time = setTimeout(() => {
-        (controlRef as any).current.style.display = 'none'
-      }, 5000)
+      // time = setTimeout(() => {
+      //   (controlRef as any).current.style.display = 'none'
+      // }, 5000)
       setPlaying(true);
       (videoDom as any).play()
     }
