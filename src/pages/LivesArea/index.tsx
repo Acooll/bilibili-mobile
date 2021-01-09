@@ -13,14 +13,20 @@ const LivesArea = (props) => {
   const type = props.location.search.match(/\d+/)
   const [areas, setAreas] = useState([])
   const [list, setList] = useState([])
-  const [page,setPage] = useState(1)
-  const [loadWord,setLoadWord] = useState('请给我更多~')
+  const [page, setPage] = useState(1)
+  const [loadWord, setLoadWord] = useState('请给我更多~')
+  const [loadMore, setLoadMore] = useState(false)
   useEffect(() => {
     if (type !== null) {
       console.log(list)
       axios.get(`/live/room/v3/Area/getRoomList?parent_area_id=${type}&area_id=&sort_type=online&page=${page}&page_size=30`).then(res => {
         setLoadWord('请给我更多~')
-        setList(list.concat(res.data.data.list))
+        setLoadMore(true)
+        if (page > 1) {
+          setList(list.concat(res.data.data.list))
+        } else {
+          setList(res.data.data.list)
+        }
       })
     } else {
       axios.get('/live/room/v1/AppIndex/getAreas?device=phone&platform=ios&scale=3&build=3939').then(res => {
@@ -28,7 +34,7 @@ const LivesArea = (props) => {
       })
     }
 
-  }, [Number(type),page])
+  }, [Number(type), page])
 
   return (
     <div>
@@ -78,7 +84,11 @@ const LivesArea = (props) => {
                 })
               }
             </div>
-            <div className='giveMore' onClick={()=>{setLoadWord('加载中。。。');setPage(page+1)}}>{loadWord}</div>
+            {
+              loadMore ? <div className='giveMore' onClick={() => { setLoadWord('加载中。。。'); setPage(page + 1) }}>{loadWord}</div> : null
+            }
+
+
           </>
       }
 

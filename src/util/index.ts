@@ -60,7 +60,6 @@ export const throttle = (func, delay) => {
 //颜文字
 
 export const wordTransform = (s) => {
-  const arr = []
   const reg = /\[.+?\]/g
   const msg = s.message
   let key =reg.exec(msg)

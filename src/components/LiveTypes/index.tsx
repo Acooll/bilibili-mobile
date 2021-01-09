@@ -32,7 +32,7 @@ const LiveTypes = (props) => {
                               <img src={item.cover} alt="" />
                             </LazyLoad>
                           </div>
-                          <div className='liveTitle'>{item.title}</div>
+                          <div className='liveTitle'>{item.title}</div> 
                         </div>
                       )
                     })

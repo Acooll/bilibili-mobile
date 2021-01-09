@@ -1,15 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './style.styl'
-import ReactPlayer from 'react-player'
 import * as Hls from "hls.js";
 import IconPlay from '../../assets/tv-play.png'
 import IconPause from '../../assets/tv-pause.png'
 import IconBarrageOn from '../../assets/barrage-on.png'
 import IconBarrageOff from '../../assets/barrage-off.png'
 import IconFullScreen from '../../assets/fullscreen.png'
-import BarDot from '../../components/BarDot'
-import { debounce, throttle } from '../../util'
-import { setPlayerDetail } from '../../store/actions';
+import { debounce } from '../../util'
+
 
 
 const VideoPlayer = (props) => {
@@ -23,7 +21,6 @@ const VideoPlayer = (props) => {
   const barRef = useRef(null)
   const dotRef = useRef(null)
   const [playing, setPlaying] = useState(false)
-  const [showControls, setShowControls] = useState(false)
   const [barrageOn, setBarrageOn] = useState(false)
   let barrageTimer
   let time
@@ -31,7 +28,6 @@ const VideoPlayer = (props) => {
 
   const domPool: any[] = []
   let danmuPool: any[] = []
-  const MAX_DANMU_COUNT = 6
   let start = 0
 
 
@@ -111,10 +107,10 @@ const VideoPlayer = (props) => {
     e.stopPropagation()
     if (barrageOn) {
       setBarrageOn(false)
-      window.localStorage.setItem('barrageOn','0')
+      window.localStorage.setItem('barrageOn', '0')
     } else {
       setBarrageOn(true)
-      window.localStorage.setItem('barrageOn','1')
+      window.localStorage.setItem('barrageOn', '1')
     }
   }
 
