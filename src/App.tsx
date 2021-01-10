@@ -19,6 +19,7 @@ import LiveRoom from './pages/LiveRoom'
 import LivesArea from './pages/LivesArea'
 import Channel from './pages/Channel'
 import Ranking from './pages/Ranking'
+import "./assets/stylus/icon.styl";
 
 function App() {
   return (

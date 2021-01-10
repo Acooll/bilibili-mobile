@@ -2,6 +2,7 @@ import React from 'react'
 import './style.styl'
 import IconRight from '../../assets/right.png'
 import LazyLoad from 'react-lazyload'
+import {tenThousand } from '../../util'
 
 const LiveTypes = (props) => {
 
@@ -31,8 +32,20 @@ const LiveTypes = (props) => {
                             <LazyLoad placeholder={<img width="100%" height="100%" src='http://s1.hdslb.com/bfs/static/blive/live-web-h5/static/images/img_loading.a3516567.png' alt="m" />}>
                               <img src={item.cover} alt="" />
                             </LazyLoad>
+                            <div className='playedInfo'>
+                              <span >
+                                <span className='numInfo'>
+                                  {item.uname}
+                                </span>
+                              </span>
+                              <span className='live-info_online-1YtP4'>
+                                <span className='numInfo'>
+                                  {tenThousand(item.online)}
+                                </span>
+                              </span>
+                            </div>
                           </div>
-                          <div className='liveTitle'>{item.title}</div> 
+                          <div className='liveTitle'>{item.title}</div>
                         </div>
                       )
                     })
@@ -43,7 +56,7 @@ const LiveTypes = (props) => {
           )
         })
       }
-      <div className='allType' onClick={()=>history.push(`/lives_area`)}>全部分类</div>
+      <div className='allType' onClick={() => history.push(`/lives_area`)}>全部分类</div>
     </>
   )
 }

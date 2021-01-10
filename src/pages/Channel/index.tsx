@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 import MenuBar from '../../components/MenuBar'
 import ChannelList from '../../components/ChannelList'
-import ChatList from '../../components/ChatList';
+
 
 const Channel = (props) => {
   const { location, region, getRegionDispatch, history } = props
@@ -18,10 +18,6 @@ const Channel = (props) => {
     getRegionDispatch(rid)
   }, [Number(rid)])
 
-  // const fetchData = (props) =>{
-  //   console.log(333)
-  //   getRegionDispatch(rid)
-  // }
 
   return (
     <div className='container'>

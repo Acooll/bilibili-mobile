@@ -6,6 +6,8 @@ import Header from '../../components/Header'
 import './style.styl'
 import axios from 'axios'
 import LazyLoad from 'react-lazyload'
+import { tenThousand } from '../../util'
+
 
 const LivesArea = (props) => {
 
@@ -58,7 +60,10 @@ const LivesArea = (props) => {
                 areas.map(item => {
                   return (
                     <div key={(item as any).id} className='item' onClick={() => props.history.push(`/lives_area?id=${(item as any).id}`)}>
-                      <img src={(item as any).entrance_icon.src} alt="" />
+                      <LazyLoad>
+                        <img src={(item as any).entrance_icon.src} alt="" />
+                      </LazyLoad>
+
                       <div>{(item as any).name}</div>
                     </div>
                   )
@@ -77,6 +82,18 @@ const LivesArea = (props) => {
                         <LazyLoad placeholder={<img width="100%" height="100%" src='http://s1.hdslb.com/bfs/static/blive/live-web-h5/static/images/img_loading.a3516567.png' alt="m" />}>
                           <img src={(item as any).cover} alt="" />
                         </LazyLoad>
+                        <div className='playedInfo'>
+                          <span >
+                            <span className='numInfo'>
+                              {(item as any).uname}
+                            </span>
+                          </span>
+                          <span className='live-info_online-1YtP4'>
+                            <span className='numInfo'>
+                              {tenThousand((item as any).online)}
+                            </span>
+                          </span>
+                        </div>
                       </div>
                       <div className='liveTitle'>{(item as any).title}</div>
                     </div>

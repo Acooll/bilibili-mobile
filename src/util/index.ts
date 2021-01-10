@@ -62,7 +62,7 @@ export const throttle = (func, delay) => {
 export const wordTransform = (s) => {
   const reg = /\[.+?\]/g
   const msg = s.message
-  let key =reg.exec(msg)
+  const key =reg.exec(msg)
   if(key){
     let url = s.emote[key[0]].url
     return  msg.replace(reg,()=>{

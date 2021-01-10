@@ -28,7 +28,7 @@ const VideoPlayer = (props) => {
 
   const domPool: any[] = []
   let danmuPool: any[] = []
-  let start = 0
+ 
 
 
 
@@ -43,8 +43,6 @@ const VideoPlayer = (props) => {
           // console.log('im send', domPool, dom);
           sendDanmu(dom)
         } else {
-          // console.log('again')
-          start += 6
           init()
         }
       }, 300)
