@@ -14,9 +14,9 @@ const Channel = (props) => {
   const rid = location.search.match(/\d+/)
 
   useEffect(() => {
-    console.log(321)
     getRegionDispatch(rid)
-  }, [Number(rid)])
+    // eslint-disable-next-line
+  }, [Number(rid),getRegionDispatch])
 
 
   return (

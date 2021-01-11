@@ -37,10 +37,9 @@ const Ranking = (props) => {
 
 
   useEffect(() => {
-    const bar = barRef.current;
     setChooseBar(Number(rid))
     getRankingListDispatch(rid);
-
+    // eslint-disable-next-line
   }, [Number(rid)])
 
 

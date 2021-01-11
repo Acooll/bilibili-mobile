@@ -75,7 +75,7 @@ const MenuBar = (props) => {
           ))}
         </div>
         <div className='arrow'>
-          <img src={IconArrowDown} onClick={() => setShowBox(true)} />
+          <img src={IconArrowDown} onClick={() => setShowBox(true)} alt='' />
         </div>
       </div>
       <div className={classNames('wrapper', showBox ? 'showWrapper' : '')}>
@@ -89,7 +89,7 @@ const MenuBar = (props) => {
             </div>
           ))}
         </div>
-        <img className='icon_up' src={IconArrowUp} onClick={() => setShowBox(false)} />
+        <img className='icon_up' src={IconArrowUp} onClick={() => setShowBox(false)} alt='' />
       </div>
     </div>
   )

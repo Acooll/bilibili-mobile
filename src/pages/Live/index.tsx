@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import * as actionTypes from '../../store/actions';
 import { connect } from "react-redux";
 import { Helmet } from 'react-helmet'
@@ -17,7 +17,7 @@ const Live = (props) => {
     if (!liveList.length) {
       getLiveListDispatch()
     }
-  }, [])
+  }, [liveList,getLiveListDispatch])
 
   return (
     <div>

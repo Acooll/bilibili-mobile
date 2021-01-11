@@ -14,7 +14,7 @@ import IconFemale from '../../assets/female.png'
 
 
 const Space = (props) => {
-  const { upInfo, getUpInfoDispatch, upVideo, getUpVideoDispatch ,history,upStat,getUpStatDispatch,upAchieveLike,getUpAchieveLikeDispatch} = props
+  const { upInfo, getUpInfoDispatch, upVideo, getUpVideoDispatch ,history,upStat,getUpStatDispatch,getUpAchieveLikeDispatch} = props
   const [choiceVideo, setChoiceVideo] = useState(false)
   const mid = props.location.search.match(/\d+/)
 
@@ -22,9 +22,9 @@ const Space = (props) => {
     getUpInfoDispatch(mid)
     getUpVideoDispatch(mid)
     getUpStatDispatch(mid)
-    // getUpAchieveLikeDispatch(mid)
-  }, [])
-
+    getUpAchieveLikeDispatch(mid)
+    // eslint-disable-next-line
+  }, [Number(mid)]) 
   return (
     <div className='container'>
       <Helmet>

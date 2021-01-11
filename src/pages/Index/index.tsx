@@ -18,7 +18,7 @@ const Index = (props) => {
     if (!recommendList.length) {
       getRecommendListDispatch()
     }
-  }, [])
+  }, [banners,getBannerListDispatch,getRecommendListDispatch,recommendList])
 
   return (
     <div className='container'>

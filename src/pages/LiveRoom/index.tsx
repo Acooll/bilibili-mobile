@@ -17,7 +17,8 @@ const LiveRoom = (props) => {
   useEffect(() => {
     getStreamInfoDispatch(roomid)
     getStreamingDispatch(roomid)
-  }, [])
+    // eslint-disable-next-line
+  }, [Number(roomid)])
   const anchor_info = streamInfo.anchor_info
   const an = Object.assign({}, anchor_info).base_info
   const base_info = Object.assign({}, an)
@@ -40,10 +41,6 @@ const LiveRoom = (props) => {
           //  setChatData(data)
           data.forEach(function (item) {
             if (item.cmd === "DANMU_MSG") {
-              // const barrage = [
-              //   "#" + Number(item.info[0][3]).toString(16),
-              //    item.info[1]
-              // ];
               const arr:any[] = []
               arr.push(item) 
               // setChatData(arr) 
@@ -56,8 +53,8 @@ const LiveRoom = (props) => {
 
       }
     })
-
-  },[])
+    // eslint-disable-next-line
+  },[Number(roomid)])
 
 
 

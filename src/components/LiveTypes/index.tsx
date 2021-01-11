@@ -18,7 +18,7 @@ const LiveTypes = (props) => {
               <div className='listContent'>
                 <div className='contentTitle'>
                   <div className='title'>{list.module_info.title}</div>
-                  <a href="">
+                  <a href="/"  >
                     <p>进去看看</p>
                     <img src={IconRight} alt="" />
                   </a>

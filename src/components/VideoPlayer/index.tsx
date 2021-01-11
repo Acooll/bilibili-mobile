@@ -36,6 +36,7 @@ const VideoPlayer = (props) => {
     setBarrageOn(Boolean(Number(window.localStorage.getItem('barrageOn'))))
     if (barrageOn && playing) {
       init()
+      // eslint-disable-next-line
       barrageTimer = setInterval(() => {
         if (domPool.length) {
           let dom = domPool.shift()
@@ -155,7 +156,7 @@ const VideoPlayer = (props) => {
     }
 
     return () => (dom as any).removeEventListener('timeupdate', handleUpdate)
-
+    // eslint-disable-next-line
   }, [playerUrl])
 
 
@@ -236,6 +237,7 @@ const VideoPlayer = (props) => {
     return () => {
       clearTimeout(time)
     }
+    // eslint-disable-next-line
   }, [playerUrl, playing])
 
   // const handleClear = () =>{

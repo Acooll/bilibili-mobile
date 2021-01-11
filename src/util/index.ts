@@ -21,15 +21,6 @@ export function tenThousand(props) {
   }
 }
 
-//10进制颜色转rgba
-
-export function getColor(number) {
-  const alpha = number >> 24 & 0xff;
-  const red = number >> 16 & 0xff;
-  const green = number >> 8 & 0xff;
-  const blue = number & 0xff;
-  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
-}
 
 // 防抖函数
 export const debounce = (func, delay) => {
@@ -62,14 +53,14 @@ export const throttle = (func, delay) => {
 export const wordTransform = (s) => {
   const reg = /\[.+?\]/g
   const msg = s.message
-  const key =reg.exec(msg)
-  if(key){
+  const key = reg.exec(msg)
+  if (key) {
     let url = s.emote[key[0]].url
-    return  msg.replace(reg,()=>{
+    return msg.replace(reg, () => {
       return `<img  alt=""  src='${url}' />`
     })
-  }else{
+  } else {
     return s.message
   }
-  
+
 }

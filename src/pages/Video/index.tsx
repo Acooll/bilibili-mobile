@@ -5,7 +5,6 @@ import './style.styl'
 import { connect } from "react-redux"
 import * as actionTypes from '../../store/actions'
 import PlayerDetail from '../../components/PlayerDetail'
-import Comments from '../../components/Comments'
 import {Helmet} from 'react-helmet'
 
 const Video = (props) => {

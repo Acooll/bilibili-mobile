@@ -3,7 +3,6 @@ import './style.styl'
 import LazyLoad from 'react-lazyload'
 import IconPlayed from '../../assets/played.png'
 import IconDanmuNum from '../../assets/danmu_num.png'
-import IconUp from '../../assets/up.png'
 import { tenThousand } from '../../util'
 
 

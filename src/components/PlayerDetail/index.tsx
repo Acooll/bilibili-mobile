@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import IconHot from '../../assets/fire.png'
 import './style.styl'
 import IconZan from '../../assets/zan.png'

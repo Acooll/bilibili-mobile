@@ -35,7 +35,7 @@ const LivesArea = (props) => {
         setAreas(res.data.data)
       })
     }
-
+    // eslint-disable-next-line
   }, [Number(type), page])
 
   return (

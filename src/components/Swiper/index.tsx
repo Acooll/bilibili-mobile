@@ -32,7 +32,7 @@ const Slider = (props) => {
               <div className="swiper-slide" key={slider.id}>
                 <div className="slider-nav">
                   <LazyLoad placeholder={<img width="100%" height="100%" src='http://s1.hdslb.com/bfs/static/blive/live-web-h5/static/images/img_loading.a3516567.png' alt="m" />}>
-                    <img src={slider.pic} width="100%" height="100%" />
+                    <img src={slider.pic} width="100%" height="100%" alt='' />
                   </LazyLoad>
                 </div>
               </div>
