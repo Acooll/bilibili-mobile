@@ -240,9 +240,6 @@ const VideoPlayer = (props) => {
     // eslint-disable-next-line
   }, [playerUrl, playing])
 
-  // const handleClear = () =>{
-  //   clearTimeout(time)
-  // }
 
   const handleChangePlay = (e) => {
     clearTimeout(time)
@@ -283,10 +280,6 @@ const VideoPlayer = (props) => {
     }
   }
 
-  // useEffect(() => {
-
-  //   return () => clearTimeout(timer)
-  // }, [playing])
 
   return (
     <div className='video_wrapper' >

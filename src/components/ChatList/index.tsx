@@ -23,21 +23,21 @@ const ChatList = (props) => {
 
         //   break;
         default:
-        
+
       }
     })
 
     const timer = setTimeout(() => {
-   
- 
+
+
       const clientHeight = (containerRef as any).current.clientHeight;
       const scrollHeight = (containerRef as any).current.scrollHeight;
-      if(scrollHeight>clientHeight){
+      if (scrollHeight > clientHeight) {
         (containerRef as any).current.scrollTop = scrollHeight - clientHeight
       }
-     
+
       (chatRef as any).current.appendChild(div)
-      
+
     }, 100)
 
     return () => clearTimeout(timer)
@@ -46,13 +46,6 @@ const ChatList = (props) => {
   return (
     <div className='chatWrapper' ref={containerRef}>
       <div className='chatContainer' ref={chatRef}>
-        {/* <div className='chatItem'>
-          <div>xxx:</div>
-          <div>hello</div>
-        </div> */}
-
-
-
       </div>
     </div>
   )

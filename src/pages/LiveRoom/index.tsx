@@ -43,7 +43,6 @@ const LiveRoom = (props) => {
             if (item.cmd === "DANMU_MSG") {
               const arr:any[] = []
               arr.push(item) 
-              // setChatData(arr) 
               setDanmu(arr as any)
               // 发送弹幕
               // videoPlayerRef.current.sendBarrage(barragData);
