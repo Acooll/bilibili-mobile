@@ -1,5 +1,4 @@
 //时间戳转换日期
-
 export function timestampToTime(timestamp) {
   var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
   var Y = date.getFullYear() + '-';
@@ -12,7 +11,6 @@ export function timestampToTime(timestamp) {
 }
 
 //数值取万
-
 export function tenThousand(props) {
   if (props > 1000) {
     return (props / 10000).toFixed(1) + '万'
@@ -20,7 +18,6 @@ export function tenThousand(props) {
     return props
   }
 }
-
 
 // 防抖函数
 export const debounce = (func, delay) => {
@@ -49,7 +46,6 @@ export const throttle = (func, delay) => {
 
 
 //颜文字
-
 export const wordTransform = (s) => {
   const reg = /\[.+?\]/g
   const msg = s.message
