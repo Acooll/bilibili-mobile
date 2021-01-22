@@ -63,7 +63,6 @@ const LivesArea = (props) => {
                       <LazyLoad>
                         <img src={(item as any).entrance_icon.src} alt="" />
                       </LazyLoad>
-
                       <div>{(item as any).name}</div>
                     </div>
                   )
